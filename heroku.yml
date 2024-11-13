@@ -1,0 +1,9 @@
+build:
+  docker:
+    web:
+      dockerfile: Dockerfile
+      target: prod
+release:
+  image: web
+  command:
+    - django-admin check --deploy && django-admin createcachetable && django-admin migrate --noinput

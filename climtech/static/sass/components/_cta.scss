@@ -1,0 +1,80 @@
+.cta {
+    $root: &;
+    @include sf-spacing(3);
+    padding: 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color--text);
+    border-radius: 10px;
+    outline-offset: 4px;
+    grid-column: 2 / span 2;
+    transition: background-color 0.3s;
+
+    @include media-query(medium) {
+        grid-column: 2 / span 3;
+    }
+
+    @include media-query(large) {
+        padding: 25px 30px;
+        grid-column: 3 / span 3;
+
+        > svg {
+            margin: 0 0 0 auto;
+        }
+    }
+
+    > svg {
+        transition: transform 0.3s;
+        margin: 0 0 0 auto;
+        flex-shrink: 0;
+
+        @media (forced-colors: active) {
+            fill: currentColor;
+        }
+    }
+
+    &:hover {
+        background-color: var(--color--highlight);
+
+        #{$root}__title,
+        #{$root}__description {
+            color: $color--white;
+        }
+
+        > svg {
+            color: $color--white;
+            transform: translateX(10px) scale(1.1);
+
+            @media (forced-colors: active) {
+                fill: currentColor;
+            }
+        }
+    }
+
+    &__title {
+        color: var(--color--interaction);
+        margin-bottom: 10px;
+
+        @include media-query(medium) {
+            margin-bottom: 5px;
+        }
+    }
+
+    &__description {
+        color: var(--color--meta);
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &--alt {
+        #{$root}__title {
+            color: var(--color--link);
+        }
+    }
+}

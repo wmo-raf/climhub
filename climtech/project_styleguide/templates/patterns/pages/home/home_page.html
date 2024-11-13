@@ -1,0 +1,42 @@
+{% extends "patterns/base_page.html" %}
+
+{% load static i18n wagtailcore_tags wagtailembeds_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block title %}Climtech - {% firstof page.seo_title page.title %}{% endblock %}
+{% block title_suffix %}{% endblock %}
+
+{% block content %}
+
+    {% include "patterns/components/hero/hero.html" with value=page classes="hero--home" %}
+
+    {% if page.call_to_action %}
+        <div class="grid">
+            <div class="button-align button-align--home">
+                {% for block in page.call_to_action %}
+                    {% with block.value as cta %}
+                        {% include "patterns/components/buttons/button.html" with arrow=True url=cta.url title=cta.text classes="button-align__item" %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if page.video %}
+        <div class="home-embed">
+            <div class="responsive-object" style="padding-bottom: 56.25%;">
+                {# Bare-minimum alternative text for the homepage video. To be replaced with YouTube. #}
+                <p id="home-embed-video-description" class="u-sr-only">Promotional homepage video</p>
+                <video aria-describedby="home-embed-video-description" controls>
+                    {% for source in page.video.sources %}
+                        <source type="{{ source.type }}" src="{{ source.src }}">
+                    {% endfor %}
+                </video>
+            </div>
+        </div>
+    {% endif %}
+
+    {% include_block page.body %}
+
+{% endblock %}

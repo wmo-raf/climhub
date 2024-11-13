@@ -1,0 +1,58 @@
+.overview-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    padding: 20px;
+    background-color: var(--color--card);
+
+    &__link {
+        color: var(--color--text);
+        transition: color $transition;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: var(--color--interaction);
+        }
+
+        &--edit {
+            margin-left: 5px;
+            font-size: 12px;
+
+            &:hover,
+            &:focus {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    &__heading {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    &__description {
+        margin-bottom: 10px;
+        color: var(--color--meta);
+    }
+
+    &__package-links {
+        margin-top: auto;
+    }
+
+    &__package-link {
+        font-size: 13px;
+        text-decoration: none;
+        color: var(--color--text);
+        transition: color $transition;
+
+        &:hover,
+        &:focus {
+            color: var(--color--interaction);
+            text-decoration: underline;
+        }
+    }
+}

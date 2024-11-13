@@ -1,0 +1,20 @@
+context:
+  value:
+    heading: 'People love Climtech'
+    quotes:
+      - author: 'Climtech - @Climtech'
+        quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
+        author_image: True
+      - author: 'Climtech - @Climtech'
+        quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
+      - author: 'Climtech - @Climtech'
+        quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
+        author_image: True
+      - author: 'Climtech - @Climtech'
+        quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
+        author_image: True
+tags:
+  image:
+    item.author_image fill-50x50 class="quotes__author-image":
+      raw: |
+        <img src="https://placehold.co/50x50" class="quotes__author-image" alt="Some alt">

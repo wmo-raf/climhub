@@ -1,0 +1,10 @@
+.arrow {
+    fill: var(--color--link);
+    height: 19px;
+    width: 25px;
+
+    &--large {
+        width: 50px;
+        height: 40px;
+    }
+}

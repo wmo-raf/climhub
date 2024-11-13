@@ -1,0 +1,114 @@
+// Colors
+$color--black: #111;
+$color--off-black: #262626;
+$color--indigo: #2e1f5e;
+$color--accent: #007d7e;
+$color--light-accent: #effeff;
+$color--eggshell: #b3e7e8;
+$color--grey: #5c5c5c;
+$color--light-grey: #edeaf3;
+$color--cool-grey: #c8c8c8;
+$color--light-grey-100: #f3f5f8;
+$color--white:#fff;
+$color--pink: #f9cbce;
+$color--off-black-30: #2626264d;
+
+// Mapping colours
+:root {
+
+    --color--background: #{$color--white};
+    --color--highlight: var(--color--accent);
+    --color--active: #{$color--indigo};
+    --color--text: #{$color--off-black};
+    --color--link: var(--color--accent);
+    --color--heading: #{$color--black};
+    --color--dark-light: #{$color--black};
+    --color--light-dark: #{$color--white};
+    --color--meta: #{$color--grey};
+    --color--interaction: #{$color--indigo};
+    --color--card: #{$color--light-grey-100};
+    --color--large-icon: var(--color--accent);
+    --color--large-icon-border: #{$color--black};
+    --color--enhancers: #{$color--eggshell};
+    --color--border: #{$color--light-grey};
+    --color--tag: #{$color--light-accent};
+    --color--code-bg: #f5f5f5;
+}
+
+.theme-dark {
+    --color--background: #{$color--off-black};
+    --color--highlight: #{$color--black};
+    --color--active: var(--color--accent);
+    --color--text: #{$color--white};
+    --color--link: var(--color--accent-200);
+    --color--heading: #{$color--white};
+    --color--dark-light: #{$color--white};
+    --color--light-dark: #{$color--black};
+    --color--meta: #{$color--cool-grey};
+    --color--interaction: var(--color--accent-100);
+    --color--card: #{$color--black};
+    --color--large-icon: var(--color--accent);
+    --color--large-icon-border: #{$color--black};
+    --color--enhancers: var(--color--accent-dark);
+    --color--border: #{$color--black};
+    --color--tag: #{$color--off-black};
+    --color--code-bg: #{$color--black};
+}
+
+
+$color--primary: var(--color--accent);
+$color--secondary: var(--color--highlight);
+
+// Fonts
+$font--primary: 'Kumbh Sans', sans-serif;
+$font--code: 'courier new', monospace;
+
+// Font weights
+$weight--bold: 700;
+$weight--semibold: 600;
+$weight--regular: 400;
+
+// Breakpoints
+$breakpoints: (
+    'smallonly' '(max-width: 599px)',
+    'medium' '(min-width: 599px)',
+    'large' '(min-width: 1023px)',
+    'extra-large' '(min-width: 1279px)'
+);
+
+// One off breakpoints
+$header-desktop: 1200px; // point at which we move to burger menu
+$header-github: 1350px; // point at which we show github badge
+
+// Header vars
+$header-mobile-height: 76px;
+$header-tablet-height: 142px;
+
+// Site grid
+$site-width: 1440px;
+$gutter-sm: 20px;
+$gutter: 30px;
+$gutter-lg: 60px;
+$gutter-xl: 80px;
+
+// Border Radius
+$rounded-sm: 3px;
+$rounded-md: 6px;
+$rounded-lg: 10px;
+$rounded-xl: 15px;
+
+// Animation
+$transition: 0.25s ease-out;
+
+// Zindices
+$z-index: (
+    under: -1,
+    base: 10,
+    overlap: 20,
+    header: 30,
+    footer: 40,
+    nav: 50,
+    cookie-message: 100,
+    modal: 110,
+    modal-controls: 120,
+);

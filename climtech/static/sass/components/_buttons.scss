@@ -1,0 +1,123 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 1px solid var(--color--highlight);
+    padding: 15px 30px;
+    color: $color--off-black;
+    outline-offset: 4px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    background-color: $color--white;
+
+    @include media-query(large) {
+        font-size: 0.8rem;
+    }
+
+    > svg {
+        transition: transform 0.3s;
+        margin: 0 0 0 15px;
+        fill: var(--color--accent);
+
+        @media (forced-colors: active) {
+            fill: currentColor;
+        }
+    }
+
+    &:hover {
+        background-color: var(--color--highlight);
+        color: $color--white;
+
+        > svg {
+            transform: translateX(6px) scale(1.05);
+            fill: var(--color--accent-200);
+
+            @media (forced-colors: active) {
+                fill: currentColor;
+            }
+        }
+    }
+
+    &--dark,
+    .theme-dark & {
+        border-color: $color--white;
+        background-color: transparent;
+        color: $color--white;
+
+        > svg {
+            fill: var(--color--accent-100);
+
+            @media (forced-colors: active) {
+                fill: currentColor;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            background-color: $color--white;
+            border-color: $color--white;
+            color: var(--color--highlight);
+
+            > svg {
+                fill: var(--color--accent);
+
+                // stylelint-disable-next-line max-nesting-depth
+                @media (forced-colors: active) {
+                    fill: currentColor;
+                }
+            }
+        }
+    }
+
+    &--secondary {
+        background-color: var(--color--highlight);
+        color: $color--white;
+
+        &:hover,
+        &:focus {
+            background-color: $color--white;
+            border-color: var(--color--highlight);
+            color: var(--color--highlight);
+        }
+    }
+
+    &--form {
+        &:hover,
+        &:focus {
+            background-color: var(--color--highlight);
+            border-color: var(--color--highlight);
+            color: $color--white;
+        }
+    }
+
+    &--reverse {
+        flex-direction: row-reverse;
+
+        > svg {
+            margin: 0 15px 0 0;
+            transform: rotate(180deg);
+        }
+
+        &:hover {
+            > svg {
+                transform: rotate(180deg) translateX(6px) scale(1.15);
+            }
+        }
+    }
+
+    &--disabled {
+        background-color: $color--light-grey;
+        border-color: $color--light-grey;
+        pointer-events: none;
+
+        > p {
+            opacity: 0.5;
+            color: $color--off-black;
+        }
+    }
+
+    &__text {
+        font-weight: $weight--bold;
+        line-height: 1.25rem;
+    }
+}

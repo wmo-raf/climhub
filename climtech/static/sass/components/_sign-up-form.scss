@@ -1,0 +1,175 @@
+.sign-up-form {
+    $root: &;
+    @include sf-spacing(2);
+    grid-column: 2 / span 2;
+    overflow: hidden; // prevent scrollbars from svg size
+
+    @include media-query(medium) {
+      grid-column: 2 / span 3;
+    }
+
+    @include media-query(large) {
+      grid-column: 2 / span 5;
+    }
+
+    &__heading {
+        // normalise the h2 element
+        margin: 0;
+    }
+
+    &__sub-heading {
+        padding: 10px 0 0 0;
+    }
+
+    &__icon {
+        @include z-index(under);
+        position: relative;
+        width: auto;
+
+        @include media-query(medium) {
+            display: block;
+        }
+
+        @include media-query(large) {
+            flex-grow: 1.5;
+        }
+
+        > svg {
+            position: relative;
+            width: 170px;
+            height: 170px;
+        }
+    }
+
+    &__inner {
+        @include media-query(large) {
+            flex-grow: 1.5;
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px 0 0 0;
+
+        @include media-query(medium) {
+            flex-direction: row;
+        }
+
+        > div {
+            display: flex;
+            justify-content: flex-start;
+            margin: 0;
+
+            @include media-query(medium) {
+                flex: 1;
+                width: 50%;
+            }
+        }
+    }
+
+    &__input {
+        flex: 1;
+        height: 50px;
+        border: 1px solid var(--color--text);
+        border-radius: $rounded-md;
+        padding: 11px 20px;
+
+        @include focus-internal();
+
+        @include media-query(medium) {
+            border-radius: $rounded-md 0 0 $rounded-md;
+        }
+
+        &::placeholder {
+            color: $color--off-black;
+        }
+    }
+
+    &__button {
+        border-radius: $rounded-md;
+        border-style: solid;
+        height: 50px;
+        margin: 15px 0 0 0;
+        background-color: var(--color--highlight);
+        color: $color--white;
+
+        @include focus-internal();
+
+        @include media-query(medium) {
+            border-radius: 0 $rounded-md $rounded-md 0;
+            border-style: solid solid solid none;
+            border-left-width: 0;
+            margin: 0;
+        }
+    }
+
+    &--block {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--color--text);
+        border-radius: 15px;
+        padding: 30px;
+
+        @include media-query(medium) {
+            flex-direction: row;
+        }
+
+        @include media-query(large) {
+            padding: 40px 60px;
+        }
+    }
+
+    &--footer {
+        background-color: #000;
+        color: $color--white;
+
+        #{$root}__input {
+            background-color: #000;
+            border: 1px solid $color--white;
+            color: $color--white;
+            border-radius: 6px;
+
+            @include media-query(medium) {
+                border-radius: 6px 0 0 6px;
+            }
+
+            &::placeholder {
+                color: $color--white;
+            }
+        }
+
+        #{$root}__button {
+            background-color: $color--white;
+            color: var(--color--highlight);
+            border-radius: 6px;
+            border-style: solid none none none;
+
+            @include media-query(medium) {
+                border-radius: 0 6px 6px 0;
+                border-style: none none none solid;
+            }
+
+            @media (forced-colors: active) {
+                border-style: solid;
+            }
+        }
+    }
+
+    .footer & {
+      @include media-query(large) {
+        margin-bottom: 50px;
+      }
+
+      &__sub-heading {
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding-top: 0;
+        font-weight: $weight--regular;
+      }
+
+      &__container {
+        margin-top: 0;
+      }
+    }
+}

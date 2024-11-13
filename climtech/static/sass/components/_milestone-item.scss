@@ -1,0 +1,114 @@
+.milestone-item {
+    $root: &;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    overflow: hidden;
+    padding: 20px;
+    background-color: var(--color--card);
+    border: 1px solid transparent;
+    border-radius: $rounded-md;
+
+    &__heading {
+        $padding: 18px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-inline-start: -$padding;
+        margin-inline-end: -$padding;
+        margin-top: -$padding;
+        padding: $padding;
+        margin-bottom: 6px;
+        font-weight: $weight--semibold;
+    }
+
+    &__external-link {
+        color: var(--color--text);
+        transition: color $transition;
+        text-decoration: none;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--color--interaction);
+
+            .icon {
+                opacity: 1;
+            }
+        }
+
+        .icon {
+            flex-shrink: 0;
+            width: 0.8rem;
+            height: 0.8rem;
+            opacity: .5;
+            margin-inline-end: -8px;
+            margin-top: -8px;
+            fill: currentColor;
+
+            @media (forced-colors: active) {
+                fill: CanvasText;
+            }
+        }
+    }
+
+    &__labels {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    &__label {
+        font-weight: $weight--regular;
+        color: var(--color--accent);
+        border: 1px solid var(--color--accent-200);
+        background-color: var(--color--tag);
+        padding: 2px 8px;
+        white-space: nowrap;
+        border-radius: $rounded-xl;
+    }
+
+    &__sponsor-label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transform: rotate(-3.56deg);
+        margin-inline-start: auto;
+        margin-inline-end: -22px;
+        width: max-content;
+        white-space: nowrap;
+        font-weight: $weight--semibold;
+        text-decoration: none;
+        color: $color--white;
+        border: 1px solid transparent;
+        background-color: var(--color--highlight);
+        padding: 2px 8px;
+
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover, &:focus-visible {
+            color: var(--color--accent-200);
+            outline-offset: 4px;
+        }
+    }
+
+    .theme-dark & {
+        #{$root}__label {
+            border-color: var(--color--border);
+            color: $color--cool-grey;
+        }
+
+        #{$root}__sponsor-label {
+            background-color: var(--color--accent-200);
+            color: $color--black;
+
+            &:hover,
+            &:focus {
+                background-color: $color--white;
+            }
+        }
+    }
+}
