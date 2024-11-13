@@ -7,8 +7,8 @@ from climtech.newsletter.models import NewsletterIndexPage, NewsletterPage
 
 
 class NewsLetterIssuesFeed(Feed):
-    title = "This week in Climtech"
-    description = "Our weekly, or thereabouts, newsletter of the goings-on in the Climtech community."
+    title = "This week in ClimTech"
+    description = "Our weekly, or thereabouts, newsletter of the goings-on in the ClimTech community."
 
     def link(self):
         root = NewsletterIndexPage.objects.live().public().first()

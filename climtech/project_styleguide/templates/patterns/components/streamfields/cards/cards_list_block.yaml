@@ -11,7 +11,7 @@ context:
           description: test
           url: '#'
       - heading: A tree structure that makes content easy to find and organise.
-        description: The Climtech administration panel uses a tree structure that makes content easy to find and organise. Whether you have a handful of page types or dozens, the content sidebar offers editors a quick, intuitive way to navigate to the content they need.
+        description: The ClimTech administration panel uses a tree structure that makes content easy to find and organise. Whether you have a handful of page types or dozens, the content sidebar offers editors a quick, intuitive way to navigate to the content they need.
         meta_icon: paper-stack
         meta_text: StreamField
         publication_date: None
@@ -27,7 +27,7 @@ context:
           text: Watch the video
           url: '#'
       - heading: A tree structure that makes content easy to find and organise.
-        description: The Climtech administration panel uses a tree structure that makes content easy to find and organise. Whether you have a handful of page types or dozens, the content sidebar offers editors a quick, intuitive way to navigate to the content they need.
+        description: The ClimTech administration panel uses a tree structure that makes content easy to find and organise. Whether you have a handful of page types or dozens, the content sidebar offers editors a quick, intuitive way to navigate to the content they need.
         meta_icon: paper-stack
         meta_text: StreamField
         publication_date: None

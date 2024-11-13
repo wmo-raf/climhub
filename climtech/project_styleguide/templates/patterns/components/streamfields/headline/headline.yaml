@@ -1,8 +1,8 @@
 context:
   value:
-    heading: Climtech's global community
+    heading: ClimTech's global community
     subheading: Created by the digital agency Torchbox in 2014
-    intro: Once Climtech was released as an open source project, 46 external contributors participated in creating version 1.0. Since then, hundreds of contributors from around the world have contributed to Climtech. The first Climtech conference, called Climtech Space, was held in March 2017 in Arnhem in the Netherlands. The name Climtech comes from the pretty little birds that gather on the lawns outside Torchbox’s offices from spring to autumn. Torchbox wanted a charming name that had a sense of light and delight to it. Plus, birds make easy logos.
+    intro: Once ClimTech was released as an open source project, 46 external contributors participated in creating version 1.0. Since then, hundreds of contributors from around the world have contributed to ClimTech. The first ClimTech conference, called ClimTech Space, was held in March 2017 in Arnhem in the Netherlands. The name ClimTech comes from the pretty little birds that gather on the lawns outside Torchbox’s offices from spring to autumn. Torchbox wanted a charming name that had a sense of light and delight to it. Plus, birds make easy logos.
     cta:
       text: Find out more
       url: '#'

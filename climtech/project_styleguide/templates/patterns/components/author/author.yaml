@@ -1,7 +1,7 @@
 context:
   author:
     name: John Smith
-    job_title: Climtech community manager
+    job_title: ClimTech community manager
     image: True
 
 tags:

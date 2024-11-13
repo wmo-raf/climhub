@@ -1,7 +1,7 @@
 {% extends "patterns/base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags %}
 
-{% block title_suffix %} | Climtech{% endblock %}
+{% block title_suffix %} | ClimTech{% endblock %}
 
 {% block meta_tags %}
     <meta name="description" content="{% if page.social_text %}{{ page.social_text }}{% elif page.listing_intro %}{{ page.listing_intro }}{% elif page.introduction %}{{ page.introduction|truncatechars:200 }}{% endif %}" />
@@ -14,7 +14,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@wagtailcms" />
     <meta name="twitter:creator" content="@wagtailcms" />
-    <meta name="twitter:title" content="{% if page %}{% firstof page.seo_title page.title %} | {% endif %}Climtech" />
+    <meta name="twitter:title" content="{% if page %}{% firstof page.seo_title page.title %} | {% endif %}ClimTech" />
     <meta name="twitter:description" content="{% if page.social_text %}{{ page.social_text }}{% elif page.listing_intro %}{{ page.listing_intro }}{% elif page.introduction %}{{ page.introduction|truncatechars:160 }}{% endif %}" />
 
     {% wagtail_site as site %}
@@ -35,7 +35,7 @@
     {% if page %}
         <meta property="og:url" content="{% fullpageurl page %}" />
     {% endif %}
-    <meta property="og:title" content="{% if page %}{% firstof page.seo_title page.title %} | {% endif %}Climtech" />
+    <meta property="og:title" content="{% if page %}{% firstof page.seo_title page.title %} | {% endif %}ClimTech" />
     {% if page.social_image %}
         {% image page.social_image width-1200 height-627 as social_img %}
     {% elif page.main_image %}
@@ -50,10 +50,10 @@
         <meta property="og:image" content="{{ site.root_url }}{% static 'img/default-sharing-image.png' %}" />
     {% endif %}
     <meta property="og:description" content="{% if page.social_text %}{{ page.social_text }}{% elif page.listing_intro %}{{ page.listing_intro }}{% elif page.introduction %}{{ page.introduction|truncatechars:200 }}{% endif %}" />
-    <meta property="og:site_name" content="Climtech" />
+    <meta property="og:site_name" content="ClimTech" />
 
-    <link title="The Climtech Blog" type="application/atom+xml" rel="alternate" href="{% url 'blog_feed' %}">
-    <link title="This Week in Climtech" type="application/atom+xml" rel="alternate" href="{% url 'newsletter_feed' %}">
+    <link title="The ClimTech Blog" type="application/atom+xml" rel="alternate" href="{% url 'blog_feed' %}">
+    <link title="This Week in ClimTech" type="application/atom+xml" rel="alternate" href="{% url 'newsletter_feed' %}">
 
     {# Reference: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs #}
     <link rel="icon" href="{% static 'img/favicons/favicon.ico' %}" sizes="32x32">{# 32x32 #}

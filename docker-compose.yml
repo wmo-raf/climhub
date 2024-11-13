@@ -1,5 +1,83 @@
+x-climtech-variables: &climtech-variables
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
+  APP_NAME: ${APP_NAME:-ClimTech}
+
+  # database
+  DB_USER: ${DB_USER:-wagtailorg}
+  DB_NAME: ${DB_NAME:-wagtailorg}
+  DB_PASSWORD: ${DB_PASSWORD:-wagtailorg}
+
+  # basic auth
+  BASIC_AUTH_ENABLED: ${BASIC_AUTH_ENABLED:-False}
+  BASIC_AUTH_LOGIN: ${BASIC_AUTH_LOGIN:-climtech}
+  BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-showmeclimtech}
+  BASIC_AUTH_WHITELISTED_PATHS: ${BASIC_AUTH_WHITELISTED_PATHS:-}
+  BASIC_AUTH_WHITELISTED_HTTP_HOST: ${BASIC_AUTH_WHITELISTED_HTTP_HOST:-}
+
+  # aws
+  AWS_STORAGE_BUCKET_NAME: ${AWS_STORAGE_BUCKET_NAME:-}
+  AWS_S3_SIGNATURE_VERSION: ${AWS_S3_SIGNATURE_VERSION:-s3v4}
+  AWS_S3_ENDPOINT_URL: ${AWS_S3_ENDPOINT_URL:-}
+  AWS_S3_REGION_NAME: ${AWS_S3_REGION_NAME:-}
+  AWS_S3_CUSTOM_DOMAIN: ${AWS_S3_CUSTOM_DOMAIN:-}
+
+  # cache
+  CACHE_CONTROL_S_MAXAGE: ${CACHE_CONTROL_S_MAXAGE:-600}
+  CACHE_CONTROL_STALE_WHILE_REVALIDATE: ${CACHE_CONTROL_STALE_WHILE_REVALIDATE:-30}
+
+  # sitewide alert
+  SITEWIDE_ALERT_MAXAGE: ${SITEWIDE_ALERT_MAXAGE:-300}
+  SITEWIDE_ALERT_SMAXAGE: ${SITEWIDE_ALERT_SMAXAGE:-604800}
+
+  # redis
+  REDIS_URL: ${REDIS_URL:-}
+  REDIS_TLS_URL: ${REDIS_TLS_URL:-}
+
+  # smtp
+  EMAIL_HOST: ${EMAIL_HOST:-}
+  EMAIL_PORT: ${EMAIL_PORT:-}
+  EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
+  EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
+  EMAIL_USE_TLS: ${EMAIL_USE_TLS:-False}
+  EMAIL_USE_SSL: ${EMAIL_USE_SSL:-False}
+  EMAIL_SUBJECT_PREFIX: ${EMAIL_SUBJECT_PREFIX:-Climweb}
+  SERVER_EMAIL: ${SERVER_EMAIL:-} #default from email
+  MODERATION_NOTIFY_SUPERUSERS: ${MODERATION_NOTIFY_SUPERUSERS:-}
+
+  # HSTS header activation
+  SECURE_HSTS_SECONDS: ${SECURE_HSTS_SECONDS:-}
+
+  # Content Security policy settings
+  CSP_DEFAULT_SRC: ${CSP_DEFAULT_SRC:-}
+  CSP_SCRIPT_SRC: ${CSP_SCRIPT_SRC:-}
+  CSP_STYLE_SRC: ${CSP_STYLE_SRC:-}
+  CSP_IMG_SRC: ${CSP_IMG_SRC:-}
+  CSP_CONNECT_SRC: ${CSP_CONNECT_SRC:-}
+  CSP_FONT_SRC: ${CSP_FONT_SRC:-}
+  CSP_BASE_URI: ${CSP_BASE_URI:-}
+  CSP_OBJECT_SRC: ${CSP_OBJECT_SRC:-}
+
+  # Referrer-policy header settings
+  SECURE_REFERRER_POLICY: ${SECURE_REFERRER_POLICY:-no-referrer-when-downgrade}
+
+  # pattern library
+  PATTERN_LIBRARY_ENABLED: ${PATTERN_LIBRARY_ENABLED:-false}
+
+  # github integration
+  GITHUB_ROADMAP_ACCESS_TOKEN: ${GITHUB_ROADMAP_ACCESS_TOKEN:-}
+
+  # mailchimp
+  MAILCHIMP_NEWSLETTER_ID: ${MAILCHIMP_NEWSLETTER_ID:-}
+  MAILCHIMP_ACCOUNT_ID: ${MAILCHIMP_ACCOUNT_ID:-}
+
+  # tracking
+  FB_APP_ID: ${FB_APP_ID:-}
+  GOOGLE_TAG_MANAGER_ID: ${GOOGLE_TAG_MANAGER_ID:-}
+
+
 services:
   web:
+    container_name: climtech_web
     build:
       context: .
       target: dev
@@ -9,15 +87,10 @@ services:
     # A Makefile task exists that starts a development server in the container: make runserver
     command: tail -f /dev/null
     environment:
-      SECRET_KEY: fake
+      <<: *climtech-variables
       DJANGO_SETTINGS_MODULE: climtech.settings.dev
-      DATABASE_URL: postgres://wagtailorg:wagtailorg@db:5432/wagtailorg
+      DATABASE_URL: postgis://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
       PRIMARY_HOST: localhost:8000
-      # The env vars get picked up by postgresql client tools (psql, pg_dump, etc)
-      PGHOST: db
-      PGUSER: wagtailorg
-      PGPASSWORD: wagtailorg
-      PGDATABASE: wagtailorg
     ports:
       - 8000:8000
     volumes:
@@ -27,16 +100,17 @@ services:
         condition: service_healthy
 
   db:
-    image: postgres:16
+    container_name: climtech_db
+    image: postgis/postgis:15-master
     expose:
       - 5432
     environment:
-      POSTGRES_DB: wagtailorg
-      POSTGRES_USER: wagtailorg
-      POSTGRES_PASSWORD: wagtailorg
-      PGDATABASE: wagtailorg
-      PGUSER: wagtailorg
-      PGPASSWORD: wagtailorg
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATABASE: ${DB_NAME}
+      PGUSER: ${DB_USER}
+      PGPASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST_AUTH_METHOD: trust
     logging:
       driver: none

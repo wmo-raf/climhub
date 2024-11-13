@@ -2,7 +2,7 @@ context:
   page:
     has_hero: True
     title: Content page
-    heading: Climtech Hero heading
+    heading: ClimTech Hero heading
     sub_heading: This is a sub-heading
     intro: Here's what appears to be an intro of some sort
     cta:

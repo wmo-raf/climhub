@@ -1,7 +1,7 @@
 context:
   page:
     heading: Create content that soars
-    sub_heading: Climtech is the leading open-source Python CMS
+    sub_heading: ClimTech is the leading open-source Python CMS
     intro: It's fast, elegant, and designed to give everyone on your team the tools they need to manage content at enterprise scale
     icon: paper-plane
     code_snippet: pip install wagtail

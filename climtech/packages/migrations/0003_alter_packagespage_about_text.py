@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             model_name="packagespage",
             name="about_text",
             field=wagtail.fields.RichTextField(
-                default="<p> Projects listed on Climtech are <i>third-party</i> packages.<br/> They are not vetted nor endorsed by Climtech.<br/> Use them at your own risk.</p>"
+                default="<p> Projects listed on ClimTech are <i>third-party</i> packages.<br/> They are not vetted nor endorsed by ClimTech.<br/> Use them at your own risk.</p>"
             ),
         ),
     ]

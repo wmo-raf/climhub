@@ -3,7 +3,7 @@ context:
     title: This is a lovely blog post
     introduction: And now, ladies and gentlemen, some lorem ipsum text
     meta_icon: rocket
-    meta_text: Adventures in Climtech
+    meta_text: Adventures in ClimTech
     publication_date: !!timestamp '2022-08-19'
     author:
       name: Jane Doe

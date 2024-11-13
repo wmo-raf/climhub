@@ -1,8 +1,8 @@
 context:
   value:
-    heading: Climtech vision
-    sub_heading: Climtech supports everyone's creativity.
-    intro: Tens of thousands of organisations worldwide, including Google, NASA, and the British NHS, are powering their digital operations with Climtech - here's why.
+    heading: ClimTech vision
+    sub_heading: ClimTech supports everyone's creativity.
+    intro: Tens of thousands of organisations worldwide, including Google, NASA, and the British NHS, are powering their digital operations with ClimTech - here's why.
     cta:
       - value:
           url: '#'

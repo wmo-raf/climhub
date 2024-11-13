@@ -3,16 +3,16 @@ context:
     - value:
         image: True
         image_on_right: False
-        heading: First 30 minutes of Climtech
-        description: 'We want the initial experience with Climtech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
+        heading: First 30 minutes of ClimTech
+        description: 'We want the initial experience with ClimTech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
         cta:
           text: View docs
           url: https://docs.wagtail.org/
     - value:
         image: True
         image_on_right: True
-        heading: First 30 minutes of Climtech
-        description: 'We want the initial experience with Climtech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
+        heading: First 30 minutes of ClimTech
+        description: 'We want the initial experience with ClimTech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
         cta:
           text: View docs
           url: https://docs.wagtail.org/
@@ -20,8 +20,8 @@ context:
         image: False
         image_on_right: False
         embed: https://www.youtube.com/embed/Ffu-2jEdLPw?feature=oembed
-        heading: First 30 minutes of Climtech
-        description: 'We want the initial experience with Climtech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
+        heading: First 30 minutes of ClimTech
+        description: 'We want the initial experience with ClimTech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
         cta:
           text: View docs
           url: https://docs.wagtail.org/
@@ -29,8 +29,8 @@ context:
         image: False
         image_on_right: True
         embed: https://www.youtube.com/embed/Ffu-2jEdLPw?feature=oembed
-        heading: First 30 minutes of Climtech
-        description: 'We want the initial experience with Climtech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
+        heading: First 30 minutes of ClimTech
+        description: 'We want the initial experience with ClimTech to be the best it can be: a great demo experience, a smooth set-up process, easy onboarding, and great documentation.'
         cta:
           text: View docs
           url: https://docs.wagtail.org/
@@ -43,4 +43,4 @@ tags:
   embed:
     value.embed:
       raw: |
-        <iframe src="https://www.youtube.com/embed/Ffu-2jEdLPw?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="White Climtech Singing and Calling"></iframe>
+        <iframe src="https://www.youtube.com/embed/Ffu-2jEdLPw?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="White ClimTech Singing and Calling"></iframe>

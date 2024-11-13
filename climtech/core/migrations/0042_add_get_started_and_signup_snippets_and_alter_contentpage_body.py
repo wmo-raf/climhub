@@ -270,7 +270,7 @@ class Migration(migrations.Migration):
                 (
                     "name",
                     models.CharField(
-                        help_text="For internal identification e.g 'This Week in Climtech', 'TWIC'.",
+                        help_text="For internal identification e.g 'This Week in ClimTech', 'TWIC'.",
                         max_length=255,
                     ),
                 ),

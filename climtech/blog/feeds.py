@@ -6,7 +6,7 @@ from climtech.blog.models import BlogPage
 
 
 class BlogFeed(Feed):
-    title = "The Climtech Blog"
+    title = "The ClimTech Blog"
     link = "/blog/"
 
     def items(self):

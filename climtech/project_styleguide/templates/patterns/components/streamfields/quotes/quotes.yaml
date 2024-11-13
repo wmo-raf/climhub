@@ -1,16 +1,16 @@
 context:
   value:
-    heading: 'People love Climtech'
+    heading: 'People love ClimTech'
     quotes:
-      - author: 'Climtech - @Climtech'
+      - author: 'ClimTech - @ClimTech'
         quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
         author_image: True
-      - author: 'Climtech - @Climtech'
+      - author: 'ClimTech - @ClimTech'
         quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
-      - author: 'Climtech - @Climtech'
+      - author: 'ClimTech - @ClimTech'
         quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
         author_image: True
-      - author: 'Climtech - @Climtech'
+      - author: 'ClimTech - @ClimTech'
         quote: “If I could turn one piece of code into a human and marry it, it would be the WagtailCMS StreamField”
         author_image: True
 tags:

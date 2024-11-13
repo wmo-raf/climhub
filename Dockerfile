@@ -11,7 +11,7 @@ RUN npm run build:prod
 
 
 # Build Python app - this stage is a common base for the prod and dev stages
-FROM python:3.12-bookworm AS backend
+FROM ghcr.io/osgeo/gdal:ubuntu-small-3.10.0 AS backend
 
 ARG POETRY_VERSION=1.8.3
 ARG UID=1000
@@ -23,11 +23,37 @@ ENV DJANGO_SETTINGS_MODULE=climtech.settings.production \
     PORT=8000 \
     PYTHONUNBUFFERED=1 \
     VIRTUAL_ENV=/venv \
-    WEB_CONCURRENCY=3
+    WEB_CONCURRENCY=3 \
+    POSTGRES_VERSION=15
 
 # Install operating system dependencies.
-RUN apt-get update --yes --quiet && \
-    apt-get install -y apt-transport-https rsync libmagickwand-dev unzip postgresql-client-15 \
+RUN apt-get update --yes --quiet \
+    && apt-get install -y --no-install-recommends \
+    build-essential \
+    lsb-release \
+    ca-certificates \
+    gnupg2 \
+    curl \
+    cron \
+    tini \
+    libpq-dev \
+    libgeos-dev \
+    imagemagick \
+    libmagic1 \
+    libcairo2-dev \
+    libpangocairo-1.0-0 \
+    libffi-dev \
+    python3-pip \
+    python3-dev \
+    python3-venv \
+    inotify-tools \
+    poppler-utils \
+    git \
+    gosu \
+    && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && curl --silent https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && apt-get update \
+    && apt-get install -y apt-transport-https rsync libmagickwand-dev unzip postgresql-client-$POSTGRES_VERSION \
     jpegoptim pngquant gifsicle libjpeg-progs webp && \
     rm -rf /var/lib/apt/lists/*
 
@@ -35,9 +61,8 @@ WORKDIR /app
 EXPOSE 8000
 
 # Create a virtual environment and install Poetry
-RUN python -m venv /venv \
-    && /venv/bin/pip install --upgrade pip wheel \
-    && /usr/local/bin/python -m pip install poetry==$POETRY_VERSION
+RUN python3 -m venv /venv \
+    && pip3 install poetry==$POETRY_VERSION
 
 # Create a non-root application user.
 RUN groupadd --gid $GID --force climtech \

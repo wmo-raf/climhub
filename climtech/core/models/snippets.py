@@ -37,7 +37,7 @@ class GetStartedSnippet(models.Model):
 class SignupFormSnippet(models.Model):
     name = models.CharField(
         max_length=255,
-        help_text="For internal identification e.g 'This Week in Climtech', 'TWIC'.",
+        help_text="For internal identification e.g 'This Week in ClimTech', 'TWIC'.",
     )
     heading = models.CharField(max_length=255)
     sub_heading = models.TextField(blank=True)

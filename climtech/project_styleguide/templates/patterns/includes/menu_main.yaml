@@ -18,7 +18,7 @@ context:
           short_description: Voluptates deserunt hic
           url: 'https://www.example.com/'
           icon: flame
-        - text: Climtech vision
+        - text: ClimTech vision
           short_description: Nam ratione optio
           url: 'http://foobar.com/'
           icon: briefcase
@@ -29,7 +29,7 @@ context:
       call_to_action:
         text: Do your best work
         sub_heading: ''
-        description: Check out the very best features Climtech offers
+        description: Check out the very best features ClimTech offers
         icon: release-cycle
         url: '#'
     - name: Resources
@@ -38,7 +38,7 @@ context:
           short_description: Latest from the ecosystem
           url: 'https://example.org/'
           icon: arrow-in-circle
-        - text: Try Climtech
+        - text: Try ClimTech
           short_description: Qui mollitia sint
           url: 'https://example.co.uk/'
           icon: money
@@ -75,12 +75,12 @@ context:
           url: 'https://www.example.com/'
           icon: flame
       call_to_action:
-        text: Climtech Space 2022
+        text: ClimTech Space 2022
         sub_heading: 15 – 17 June 2022
         description: Arnhem, The Netherlands
         icon: release-cycle
         url: '#'
-    - name: Why Climtech?
+    - name: Why ClimTech?
       nav_items:
         - text: For governments
           short_description: Latest from the ecosystem
@@ -99,9 +99,9 @@ context:
           url: 'https://www.example.com/'
           icon: flame
       call_to_action:
-        text: Climtech vs Wordpress
+        text: ClimTech vs Wordpress
         sub_heading: ''
-        description: Snappy sentence summarising why Climtech is more awesome than Wordpress
+        description: Snappy sentence summarising why ClimTech is more awesome than Wordpress
         icon: release-cycle
         url: '#'
     - name: Services
@@ -123,8 +123,8 @@ context:
           url: 'https://www.example.com/'
           icon: flame
       call_to_action:
-        text: Climtech Support
+        text: ClimTech Support
         sub_heading: ''
-        description: Check out the very best features Climtech offers
+        description: Check out the very best features ClimTech offers
         icon: code-file
         url: '#'

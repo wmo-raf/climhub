@@ -14,7 +14,7 @@ from wagtail.models import Orderable, Page, index
 from climtech.core.blocks import ContentStoryBlock
 from climtech.utils.models import SocialMediaMixin
 
-github_help = "To change this data, edit the corresponding item on GitHub and then synchronise from Climtech settings"
+github_help = "To change this data, edit the corresponding item on GitHub and then synchronise from ClimTech settings"
 
 readonly = forms.TextInput(attrs={"readonly": True})
 

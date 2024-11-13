@@ -21,7 +21,7 @@ context:
           links:
             - text: Get Started
               url: '#'
-            - text: Try Climtech
+            - text: Try ClimTech
               url: '#'
             - text: Developer docs
               url: '#'
@@ -50,7 +50,7 @@ context:
               url: '#'
             - text: Events
               url: '#'
-            - text: Climtech Space
+            - text: ClimTech Space
               url: '#'
       - value:
           heading: Solutions
@@ -69,9 +69,9 @@ context:
               url: '#'
             - text: Open source enterprise CMS
               url: '#'
-            - text: Climtech vs Django CMS
+            - text: ClimTech vs Django CMS
               url: '#'
-            - text: Climtech vs Wordpress
+            - text: ClimTech vs Wordpress
               url: '#'
             - text: Headless CMS
               url: '#'

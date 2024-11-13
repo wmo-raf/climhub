@@ -2,13 +2,13 @@ context:
   value:
     cards:
       - text: Senior Python Developer
-        description: Take the lead on building web apps, helping to improve Climtech and working in a multidisciplinary team environment to solve complex problems.
+        description: Take the lead on building web apps, helping to improve ClimTech and working in a multidisciplinary team environment to solve complex problems.
         meta_icon: location-pin
         meta_text: UK, US, Philippines & Remote
         logo: fake
         publication_date: false
-      - text: Senior Climtech Developer
-        description: By joining our Climtech product team you'll learn from the likes of Django Fellows
+      - text: Senior ClimTech Developer
+        description: By joining our ClimTech product team you'll learn from the likes of Django Fellows
         meta_icon: location-pin
         meta_text: Philippines
         logo: fake
