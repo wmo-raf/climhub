@@ -85,7 +85,10 @@ COPY --chown=climtech . .
 RUN poetry install --only-root
 
 # Collect static files
+
 COPY --chown=climtech --from=frontend ./climtech/static_compiled ./climtech/static_compiled
+
+
 RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
 
 # Run application

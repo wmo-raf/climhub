@@ -1580,6 +1580,24 @@ docs = ["Sphinx (>=7.0)", "myst-parser (==2.0.0)", "pyenchant (>=3.1.1,<4)", "sp
 testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-frontdoor (>=1.0,<1.1)", "boto3 (>=1.28,<2)", "coverage (>=3.7.0)", "curlylint (==0.13.1)", "django-pattern-library (>=0.7)", "djhtml (==3.0.6)", "doc8 (==0.8.1)", "factory-boy (>=3.2)", "freezegun (>=0.3.8)", "polib (>=1.1,<2.0)", "python-dateutil (>=2.7)", "pytz (>=2014.7)", "ruff (==0.1.5)", "semgrep (==1.40.0)", "tblib (>=2.0,<3.0)"]
 
 [[package]]
+name = "wagtail-autocomplete"
+version = "0.11.0"
+description = "An Autocomplete edit handler for Pages, Snippets, and more."
+optional = false
+python-versions = "*"
+files = [
+    {file = "wagtail-autocomplete-0.11.0.tar.gz", hash = "sha256:b2ba0f5c8a0e43cdc124a9503d91e9815fb0251a1431d52db5868306ab935059"},
+    {file = "wagtail_autocomplete-0.11.0-py3-none-any.whl", hash = "sha256:11479000aae7532376048d0ff75585d9bebc8fdd09bad88b28f770032a362d11"},
+]
+
+[package.dependencies]
+wagtail = ">=2.15"
+
+[package.extras]
+docs = ["Sphinx (>=1.7)", "sphinx-rtd-theme (>=0.4.0)"]
+test = ["beautifulsoup4 (>=4.8)", "html5lib (>=0.999999999)", "pytest (>=3.5)", "pytest-django (>=3.2)", "pytest-pythonpath (>=0.7.2)", "tox"]
+
+[[package]]
 name = "wagtail-cache"
 version = "2.5.1"
 description = "A simple page cache for Wagtail based on the Django cache middleware."
@@ -1759,4 +1777,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c29443d81b8ad05ec9cd915ddd31444cf5846af785bed9a08376c42f9f64ee51"
+content-hash = "411ea77de397af3dd0a2d169bfe51c70a5eedcdae6797f60aee716f72bee20ac"

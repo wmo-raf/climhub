@@ -15,6 +15,7 @@ const options = {
     entry: {
         blocking: `./${projectRoot}/static/js/blocking.js`,
         main: `./${projectRoot}/static/js/main.js`,
+        tagify_init: `./${projectRoot}/static/js/tagify_init.js`,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],

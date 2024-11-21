@@ -7,10 +7,12 @@ from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
+from django import forms
 
 from wagtailmedia.blocks import VideoChooserBlock
 
 from climtech.core.choices import SVGIcon
+from wagtail.blocks import FieldBlock
 
 
 class CTALinkStructValue(blocks.StructValue):
@@ -499,6 +501,55 @@ class ContentStoryBlock(blocks.StreamBlock):
         template = "patterns/components/streamfields/content_story_block.html"
 
 
+# class CountryBlock(blocks.StructBlock):
+#     country = blocks.ChoiceBlock(
+#         choices=[
+#             ('DZ', 'Algeria'), ('AO', 'Angola'), ('BJ', 'Benin'), ('BW', 'Botswana'),
+#             ('BF', 'Burkina Faso'), ('BI', 'Burundi'), ('CM', 'Cameroon'), ('CV', 'Cape Verde'),
+#             ('CF', 'Central African Republic'), ('TD', 'Chad'), ('KM', 'Comoros'), ('CG', 'Congo - Brazzaville'),
+#             ('CD', 'Congo - Kinshasa'), ('CI', "Côte d'Ivoire"), ('DJ', 'Djibouti'), ('EG', 'Egypt'),
+#             ('GQ', 'Equatorial Guinea'), ('ER', 'Eritrea'), ('SZ', 'Eswatini'), ('ET', 'Ethiopia'),
+#             ('GA', 'Gabon'), ('GM', 'Gambia'), ('GH', 'Ghana'), ('GN', 'Guinea'), ('GW', 'Guinea-Bissau'),
+#             ('KE', 'Kenya'), ('LS', 'Lesotho'), ('LR', 'Liberia'), ('LY', 'Libya'), ('MG', 'Madagascar'),
+#             ('MW', 'Malawi'), ('ML', 'Mali'), ('MR', 'Mauritania'), ('MU', 'Mauritius'), ('MA', 'Morocco'),
+#             ('MZ', 'Mozambique'), ('NA', 'Namibia'), ('NE', 'Niger'), ('NG', 'Nigeria'), ('RW', 'Rwanda'),
+#             ('ST', 'São Tomé and Príncipe'), ('SN', 'Senegal'), ('SC', 'Seychelles'), ('SL', 'Sierra Leone'),
+#             ('SO', 'Somalia'), ('ZA', 'South Africa'), ('SS', 'South Sudan'), ('SD', 'Sudan'), ('TZ', 'Tanzania'),
+#             ('TG', 'Togo'), ('TN', 'Tunisia'), ('UG', 'Uganda'), ('ZM', 'Zambia'), ('ZW', 'Zimbabwe')
+#         ],
+#         label="Country"
+#     )
+class MultiChoiceBlock(FieldBlock):
+    def __init__(self, choices=None, **kwargs):
+        self.field = forms.MultipleChoiceField(
+            choices=choices,
+            widget=forms.CheckboxSelectMultiple,
+        )
+        super().__init__(**kwargs)
+
+class CategoryBlock(blocks.StructBlock):
+    COUNTRY_CHOICES=[
+            ('DZ', 'Algeria'), ('AO', 'Angola'), ('BJ', 'Benin'), ('BW', 'Botswana'),
+            ('BF', 'Burkina Faso'), ('BI', 'Burundi'), ('CM', 'Cameroon'), ('CV', 'Cape Verde'),
+            ('CF', 'Central African Republic'), ('TD', 'Chad'), ('KM', 'Comoros'), ('CG', 'Congo - Brazzaville'),
+            ('CD', 'Congo - Kinshasa'), ('CI', "Côte d'Ivoire"), ('DJ', 'Djibouti'), ('EG', 'Egypt'),
+            ('GQ', 'Equatorial Guinea'), ('ER', 'Eritrea'), ('SZ', 'Eswatini'), ('ET', 'Ethiopia'),
+            ('GA', 'Gabon'), ('GM', 'Gambia'), ('GH', 'Ghana'), ('GN', 'Guinea'), ('GW', 'Guinea-Bissau'),
+            ('KE', 'Kenya'), ('LS', 'Lesotho'), ('LR', 'Liberia'), ('LY', 'Libya'), ('MG', 'Madagascar'),
+            ('MW', 'Malawi'), ('ML', 'Mali'), ('MR', 'Mauritania'), ('MU', 'Mauritius'), ('MA', 'Morocco'),
+            ('MZ', 'Mozambique'), ('NA', 'Namibia'), ('NE', 'Niger'), ('NG', 'Nigeria'), ('RW', 'Rwanda'),
+            ('ST', 'São Tomé and Príncipe'), ('SN', 'Senegal'), ('SC', 'Seychelles'), ('SL', 'Sierra Leone'),
+            ('SO', 'Somalia'), ('ZA', 'South Africa'), ('SS', 'South Sudan'), ('SD', 'Sudan'), ('TZ', 'Tanzania'),
+            ('TG', 'Togo'), ('TN', 'Tunisia'), ('UG', 'Uganda'), ('ZM', 'Zambia'), ('ZW', 'Zimbabwe')
+        ]
+    category_name = blocks.CharBlock(required=True, max_length=255, label="Category Name")
+    color = blocks.CharBlock(required=True, help_text="Hex code for category color")
+    countries = MultiChoiceBlock(choices=COUNTRY_CHOICES)
+    class Meta:
+        template = 'patterns/components/streamfields/map_block/category_block.html'
+        icon = 'table-list'
+
+
 class HomePageStoryBlock(blocks.StreamBlock):
     get_started_block = SnippetChooserBlock("core.GetStartedSnippet", icon="th-list")
     headline = HeadlineBlock()
@@ -509,6 +560,9 @@ class HomePageStoryBlock(blocks.StreamBlock):
     standalone_cta = StandaloneCTABlock()
     teaser = TeaserBlock()
     video = VideoBlock()
-
+    map_block = SnippetChooserBlock(
+        target_model="core.MapSnippet",
+        help_text="Select a Map Block"
+    )
     class Meta:
         template = "patterns/components/streamfields/home_page_story_block.html"

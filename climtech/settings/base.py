@@ -89,7 +89,8 @@ INSTALLED_APPS = [
     "climtech.project_styleguide.apps.ProjectStyleguideConfig",
     "wagtailfontawesomesvg",
     "wagtail_color_panel",
-    "wagtailcache"
+    "wagtailcache",
+    "wagtailautocomplete"
 ]
 
 MIDDLEWARE = [

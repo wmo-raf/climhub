@@ -1,10 +1,10 @@
 from django.db import models
 
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.fields import StreamField
+from wagtail.fields import StreamField, RichTextField
 from wagtail.snippets.models import register_snippet
 
-from climtech.core.blocks import GetStartedBlock
+from climtech.core.blocks import GetStartedBlock, CategoryBlock
 
 
 @register_snippet
@@ -72,3 +72,39 @@ class SignupFormSnippet(models.Model):
 
     class Meta:
         verbose_name = "Signup form"
+
+
+
+
+@register_snippet
+class MapSnippet(models.Model):
+    """Snippet to define a map block with heading, subheading, description, and categories."""
+    title = models.CharField(max_length=255, help_text="Title for the map")
+    subheading = models.CharField(max_length=255, blank=True, null=True, help_text="Subheading (optional)")
+    description = RichTextField(features=["bold", "italic"], help_text="Description of the map")
+
+
+    map_categories = StreamField(
+        [
+            (
+                "map_categories",
+                CategoryBlock(),
+            ),
+        ],
+        use_json_field=True,
+        null=True
+    )
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('subheading'),
+        FieldPanel('description'),
+        FieldPanel('map_categories'),
+    ]
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Map Block Snippet"
+        verbose_name_plural = "Map Block Snippets"

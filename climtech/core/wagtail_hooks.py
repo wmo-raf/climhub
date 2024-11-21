@@ -8,6 +8,9 @@ from wagtail.documents.models import document_served
 from wagtail.whitelist import allow_without_attributes
 
 from storages.backends.s3 import S3Storage
+from django.utils.html import format_html
+from django.templatetags.static import static
+from django.template.loader import render_to_string
 
 
 @hooks.register("construct_whitelister_element_rules")
@@ -66,3 +69,13 @@ def serve_document_from_s3(document, request):
     del response["Cache-control"]
     add_never_cache_headers(response)
     return response
+
+@hooks.register("insert_editor_css")
+def editor_css():
+    return format_html(
+        '<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet">'
+    )
+
+@hooks.register("insert_editor_js")
+def editor_js():
+    return format_html(render_to_string("core/includes/tagify_js.html"))

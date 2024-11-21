@@ -33,7 +33,7 @@ sentry-sdk = "~2.17"
 wagtail-font-awesome-svg = "~1.0.1"
 wagtail-color-panel = "~1.4.1"
 wagtail-cache = "~2.5.1"
-
+wagtail-autocomplete = "~0.11.0"
 wagtailmedia = "~0.15.2"
 whitenoise = "~6.7"
 django-redis = "~5.4"

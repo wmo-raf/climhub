@@ -24,10 +24,13 @@ from climtech.utils.cache import (
 )
 from climtech.utils.sitemap_generator import Sitemap
 from climtech.utils.views import error_404, error_500, favicon, robots
+from wagtailautocomplete.urls.admin import urlpatterns as autocomplete_admin_urls
+
 
 # Private URLs are not meant to be cached.
 private_urlpatterns = [
     path("django-admin/", admin.site.urls),
+    path("admin/autocomplete/", include(autocomplete_admin_urls)),
     path("admin/", include(wagtailadmin_urls)),
     path("search/", search, name="search"),
     path("sitewide_alert/", include(sitewide_alert_urls, namespace="sitewide_alert")),

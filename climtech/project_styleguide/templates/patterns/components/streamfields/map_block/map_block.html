@@ -1,0 +1,11 @@
+<div>
+    <h3>{{ value.heading }}</h3>
+    <p>{{ value.subheading }}</p>
+    {% for category in value.categories %}
+        <div>
+            <strong>Category:</strong> {{ category.name }} ({{ category.color }})
+            <input type="text" data-tagify value="{{ category.countries|join:',' }}" />
+        </div>
+    {% endfor %}
+    <div class="map-preview" id="map-{{ id }}"></div>
+</div>
