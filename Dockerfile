@@ -81,14 +81,14 @@ RUN chown --recursive $UID:$GID /app /venv
 FROM backend as prod
 
 # Switch to application user
-USER climtech
+USER $UID:$GID
 
 # Install production dependencies
-COPY --chown=climtech pyproject.toml poetry.lock ./
+COPY --chown=$UID:$GID pyproject.toml poetry.lock ./
 RUN poetry install --only main --no-root
 
 # Copy in application code and install the root package
-COPY --chown=climtech . .
+COPY --chown=$UID:$GID . .
 RUN poetry install --only-root
 
 
@@ -96,11 +96,11 @@ RUN poetry install --only-root
 # Collect static files
 RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
 
-COPY --chown=climtech --from=frontend ./climtech/static_compiled /climtech/static_compiled
+COPY --chown=$UID:$GID --from=frontend ./climtech/static_compiled /climtech/static_compiled
 
 
 # RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
-COPY --chown=climtech docker-entrypoint.sh ./
+COPY --chown=$UID:$GID docker-entrypoint.sh ./
 
 RUN chmod a+x ./docker-entrypoint.sh
 
