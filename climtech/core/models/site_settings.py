@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 @register_setting
 class ThemeSetting(BaseSiteSetting):
-    accent_color =  ColorField(blank=True, null=True, default="##09aaff",
+    accent_color =  ColorField(blank=True, null=True, default="#09aaff",
                                help_text=_("Accent color (use color picker). Accent colors are often bright or contrasting to stand out"))
     accent_color_dark =  ColorField(blank=True, null=True, default="#065354",
                                help_text=_("Darker Accent color (use color picker). Darker shade of the Accent colors are often bright or contrasting to stand out"))
