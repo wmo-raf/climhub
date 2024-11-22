@@ -1,6 +1,13 @@
 from django.conf import settings
 from climtech.core.models.site_settings import ThemeSetting
+from django.core.exceptions import ObjectDoesNotExist
 
+
+default_theme = {
+            'accent_color':'#333',
+            'accent_color_dark':'#333',
+            'footer_color_bg':'#333'
+        }
 def theme(request):
 
     try:
@@ -12,12 +19,8 @@ def theme(request):
             'accent_color_dark':theme.accent_color_dark,
             'footer_color_bg':theme.footer_color_bg
         }
-    except:
-        return {
-            'accent_color':'#333',
-            'accent_color_dark':'#333',
-            'footer_color_bg':'#333'
-        }
+    except ObjectDoesNotExist:
+        return default_theme
 
 def global_pages(request):
     return {
