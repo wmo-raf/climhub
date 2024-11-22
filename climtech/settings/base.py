@@ -570,7 +570,7 @@ if "SENTRY_DSN" in env and not is_in_shell:
 
 
 # Favicon path
-FAVICON_PATH = "static/img/favicons/favicon.ico"
+FAVICON_PATH = "img/favicons/favicon.ico"
 
 
 # Frontend cache
