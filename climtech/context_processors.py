@@ -19,7 +19,7 @@ def theme(request):
             'accent_color_dark':d_theme.accent_color_dark,
             'footer_color_bg':d_theme.footer_color_bg
         }
-    except ObjectDoesNotExist:
+    except Exception:
         return default_theme
 
 def global_pages(request):
