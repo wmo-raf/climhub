@@ -22,6 +22,9 @@ MANIFEST_LOADER["cache"] = True  # noqa
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', cast=None, default=[])
+
+
 try:
     from .local import *  # noqa
 except ImportError:

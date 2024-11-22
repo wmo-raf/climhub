@@ -4,6 +4,7 @@ x-climtech-variables: &climtech-variables
   ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
   APP_NAME: ${APP_NAME:-ClimTech}
   GUNICORN_NUM_OF_WORKERS: ${CMS_NUM_OF_WORKERS:-4}
+  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-}
 
   # database
   DB_USER: ${DB_USER:-wagtailorg}
