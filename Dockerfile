@@ -14,8 +14,10 @@ RUN npm run build:prod
 FROM ghcr.io/osgeo/gdal:ubuntu-small-3.10.0 AS backend
 
 ARG POETRY_VERSION=1.8.3
-ARG UID=1000
-ARG GID=1000
+ARG UID
+ENV UID=${UID:-1000}
+ARG GID
+ENV GID=${GID:-1000}
 
 ENV DJANGO_SETTINGS_MODULE=climtech.settings.production \
     GUNICORN_CMD_ARGS="--max-requests 1200 --max-requests-jitter 50 --access-logfile -" \
@@ -57,6 +59,11 @@ RUN apt-get update --yes --quiet \
     jpegoptim pngquant gifsicle libjpeg-progs webp && \
     rm -rf /var/lib/apt/lists/*
 
+ENV DOCKER_COMPOSE_WAIT_VERSION=2.12.1
+
+# Install docker-compose wait
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$DOCKER_COMPOSE_WAIT_VERSION/wait /wait
+RUN chmod +x /wait
 WORKDIR /app
 EXPOSE 8000
 
@@ -84,15 +91,23 @@ RUN poetry install --only main --no-root
 COPY --chown=climtech . .
 RUN poetry install --only-root
 
+
+
 # Collect static files
-
-COPY --chown=climtech --from=frontend ./climtech/static_compiled ./climtech/static_compiled
-
-
 RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
 
+COPY --chown=climtech --from=frontend ./climtech/static_compiled /climtech/static_compiled
+
+
+# RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
+COPY --chown=climtech docker-entrypoint.sh ./
+
+RUN chmod a+x ./docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/tini", "--", "./docker-entrypoint.sh"]
+
 # Run application
-CMD gunicorn climtech.wsgi:application
+CMD ["gunicorn", "climtech.wsgi:application"]
 
 
 # This stage builds the image that we use for development

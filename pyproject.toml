@@ -37,6 +37,9 @@ wagtail-autocomplete = "~0.11.0"
 wagtailmedia = "~0.15.2"
 whitenoise = "~6.7"
 django-redis = "~5.4"
+channels = "~4.0.0"
+uvicorn = "~0.30.5"
+django-nextjs = "~2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "24.10.0"

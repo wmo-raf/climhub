@@ -1,6 +1,9 @@
 x-climtech-variables: &climtech-variables
+  WAIT_HOSTS: climtech_db:5432
+  WAIT_TIMEOUT: 120
   ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
   APP_NAME: ${APP_NAME:-ClimTech}
+  GUNICORN_NUM_OF_WORKERS: ${CMS_NUM_OF_WORKERS:-4}
 
   # database
   DB_USER: ${DB_USER:-wagtailorg}
@@ -74,32 +77,36 @@ x-climtech-variables: &climtech-variables
   FB_APP_ID: ${FB_APP_ID:-}
   GOOGLE_TAG_MANAGER_ID: ${GOOGLE_TAG_MANAGER_ID:-}
 
+  SECRET_KEY: ${SECRET_KEY:-}
 
 services:
-  web:
+  climtech_web:
     container_name: climtech_web
     build:
       context: .
-      target: dev
+      target: prod
+      args:
+        - UID=${UID}
+        - GID=${GID}
     init: true
     # This command just starts the container and keeps it running.
     # To run a command within the container run docker-compose exec web <command>
     # A Makefile task exists that starts a development server in the container: make runserver
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
     environment:
       <<: *climtech-variables
-      DJANGO_SETTINGS_MODULE: climtech.settings.dev
-      DATABASE_URL: postgis://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      DJANGO_SETTINGS_MODULE: climtech.settings.production
+      DATABASE_URL: postgis://${DB_USER}:${DB_PASSWORD}@climtech_db:5432/${DB_NAME}
       PRIMARY_HOST: localhost:8000
     ports:
       - 8000:8000
     volumes:
       - .:/app/
     depends_on:
-      db:
+      climtech_db:
         condition: service_healthy
 
-  db:
+  climtech_db:
     container_name: climtech_db
     image: postgis/postgis:15-master
     expose:
@@ -121,3 +128,18 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+
+  climtech_nginx:
+      container_name: climtech_nginx
+      image: nginx:1.20.2-alpine
+      restart: always
+      volumes:
+        - ${STATIC_VOLUME}:/wagtail_static
+        - ${MEDIA_VOLUME}:/wagtail_media
+        - ${STATIC_COMPILED_VOLUME}:/wagtail_static_compiled
+        - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf
+      ports:
+        - ${CLIMTECH_PORT}:80
+      depends_on:
+        - climtech_web

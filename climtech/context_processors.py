@@ -3,13 +3,21 @@ from climtech.core.models.site_settings import ThemeSetting
 
 def theme(request):
 
-    theme = ThemeSetting.for_request(request)
+    try:
 
-    return {
-        'accent_color':theme.accent_color,
-        'accent_color_dark':theme.accent_color_dark,
-        'footer_color_bg':theme.footer_color_bg
-    }
+        theme = ThemeSetting.for_request(request)
+
+        return {
+            'accent_color':theme.accent_color,
+            'accent_color_dark':theme.accent_color_dark,
+            'footer_color_bg':theme.footer_color_bg
+        }
+    except:
+        return {
+            'accent_color':'#333',
+            'accent_color_dark':'#333',
+            'footer_color_bg':'#333'
+        }
 
 def global_pages(request):
     return {

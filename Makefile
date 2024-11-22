@@ -12,8 +12,8 @@ help:  ## ⁉️  - Display help comments for each make command
 		| sort
 
 setup: build  ## 🔨 - Set instance up
-	docker-compose run web django-admin migrate
-	docker-compose run web django-admin createcachetable
+	docker-compose run climtech_web django-admin migrate
+	docker-compose run climtech_web django-admin createcachetable
 
 build:  ## 🔨 - Build Docker container
 	bash -c "docker-compose build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g)"
@@ -21,17 +21,17 @@ build:  ## 🔨 - Build Docker container
 start:	## 🎬 - Start containers
 	docker-compose up
 
-sh:	## Enter the web container
-	docker-compose exec web bash
+sh:	## Enter the climtech_web container
+	docker-compose exec climtech_web bash
 
 runserver:	## 🏃 - Run Django server
-	docker-compose exec web django-admin runserver 0.0.0.0:8000
+	docker-compose exec climtech_web django-admin runserver 0.0.0.0:8000
 
 superuser:	## 🔒 - Create superuser
-	docker-compose run web django-admin createsuperuser
+	docker-compose run climtech_web django-admin createsuperuser
 
 migrations:	## 🧳 - Make migrations
-	docker-compose run web django-admin makemigrations
+	docker-compose run climtech_web django-admin makemigrations
 
 migrate:  ## 🧳 - Migrate
-	docker-compose run web django-admin migrate
+	docker-compose run climtech_web django-admin migrate
