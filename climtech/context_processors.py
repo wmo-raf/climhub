@@ -12,12 +12,12 @@ def theme(request):
 
     try:
 
-        theme = ThemeSetting.for_request(request)
+        d_theme = ThemeSetting.for_request(request)
 
         return {
-            'accent_color':theme.accent_color,
-            'accent_color_dark':theme.accent_color_dark,
-            'footer_color_bg':theme.footer_color_bg
+            'accent_color':d_theme.accent_color,
+            'accent_color_dark':d_theme.accent_color_dark,
+            'footer_color_bg':d_theme.footer_color_bg
         }
     except ObjectDoesNotExist:
         return default_theme
