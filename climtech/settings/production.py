@@ -19,7 +19,7 @@ MANIFEST_LOADER["cache"] = True  # noqa
 # browsers may ensure that the cookies are only sent under an HTTPS connection.
 # https://docs.djangoproject.com/en/4.1/ref/settings/#session-cookie-secure
 # https://docs.djangoproject.com/en/4.1/ref/settings/#csrf-cookie-secure
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 DEBUG = True
 if "CSRF_TRUSTED_ORIGINS" in env:
