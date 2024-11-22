@@ -72,8 +72,8 @@ RUN python3 -m venv /venv \
     && pip3 install poetry==$POETRY_VERSION
 
 # Create a non-root application user.
-RUN groupadd --gid $GID --force climtech \
-    && useradd --create-home --uid $UID -g climtech climtech
+# RUN groupadd --gid $GID --force climtech \
+#     && useradd --create-home --uid $UID -g climtech climtech
 RUN chown --recursive $UID:$GID /app /venv
 
 
