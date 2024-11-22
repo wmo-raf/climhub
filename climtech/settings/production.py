@@ -20,7 +20,7 @@ MANIFEST_LOADER["cache"] = True  # noqa
 # https://docs.djangoproject.com/en/4.1/ref/settings/#session-cookie-secure
 # https://docs.djangoproject.com/en/4.1/ref/settings/#csrf-cookie-secure
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 if "CSRF_TRUSTED_ORIGINS" in env:
     CSRF_TRUSTED_ORIGINS = env["CSRF_TRUSTED_ORIGINS"].split(",")
