@@ -68,7 +68,7 @@ ENV DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX=${DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX:-}
 
 # Install docker-compose wait
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$DOCKER_COMPOSE_WAIT_VERSION/wait${DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX} /wait
-RUN chmod +x /wait
+RUN chown $UID:$GID /wait &&  chmod +x /wait
 
 RUN mkdir -p /app /venv /.cache && chown $UID:$GID /app /venv /.cache
 
