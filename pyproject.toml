@@ -5,7 +5,7 @@ description = "The climtech's site"
 authors = ["Torchbox <hello@torchbox.com>"]
 license = "BSD-3-Clause"
 readme = "README.md"
-packages = [{include = "climtech"}]
+packages = [{ include = "climtech" }]
 
 [build-system]
 requires = ["poetry-core"]
@@ -15,16 +15,15 @@ build-backend = "poetry.core.masonry.api"
 python = "^3.12"
 django = "~5.0.6"
 wagtail = "~6.2.2"
-psycopg = "~3.2"
+psycopg2 = "~2.9.10"
 gunicorn = "~23.0.0"
 dj-database-url = "~2.3.0"
 django-basic-auth-ip-whitelist = "~0.6"
-django-csp = "~3.8"
 django-manifest-loader = "~1.0.0"
 django-pattern-library = "~1.2.0"
 django-permissions-policy = "~4.22"
 django-referrer-policy = "~1.0"
-django-storages = { version ="~1.14", extras = ["s3"] }
+django-storages = { version = "~1.14", extras = ["s3"] }
 markdown = "~3.7"
 pygments = "~2.18"
 requests = "~2.32.3"
@@ -35,11 +34,10 @@ wagtail-color-panel = "~1.4.1"
 wagtail-cache = "~2.5.1"
 wagtail-autocomplete = "~0.11.0"
 wagtailmedia = "~0.15.2"
-whitenoise = "~6.7"
 django-redis = "~5.4"
 channels = "~4.0.0"
 uvicorn = "~0.30.5"
-django-nextjs = "~2.4.0"
+django-environ = "~0.11.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "24.10.0"
