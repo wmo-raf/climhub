@@ -72,6 +72,7 @@ services:
       args:
         - UID=${UID}
         - GID=${GID}
+        - DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX=${DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX:-}
     init: true
     # This command just starts the container and keeps it running.
     # To run a command within the container run docker-compose exec web <command>
@@ -81,7 +82,6 @@ services:
       <<: *climtech-variables
       DATABASE_URL: postgis://${DB_USER}:${DB_PASSWORD}@climtech_db:5432/${DB_NAME}
       PRIMARY_HOST: localhost:8000
-      DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX: ${DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX:-}
     ports:
       - 8000
     volumes:
