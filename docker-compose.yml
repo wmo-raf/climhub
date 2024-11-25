@@ -105,6 +105,8 @@ services:
       PGUSER: ${DB_USER}
       PGPASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ${DB_VOLUME:-./db_data}:/var/lib/postgresql/data/
     logging:
       driver: none
     healthcheck:
