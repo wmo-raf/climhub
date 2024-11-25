@@ -52,22 +52,20 @@ run_setup_commands_if_configured() {
         # migrate database
     if [ "$MIGRATE_ON_STARTUP" = "true" ]; then
         echo "python manage.py migrate"
-        ./manage.py migrate --noinput
+        /app/manage.py migrate --noinput
     fi
 
         # cache table
     if [ "$CACHE_TABLE_ON_STARTUP" = "true" ]; then
         echo "python manage.py createcachetable"
-        ./manage.py createcachetable
+        /app/manage.py createcachetable
     fi
 
-       # collect staticfiles
-    # if [ "$COLLECT_STATICFILES_ON_STARTUP" = "true" ]; then
-    #     echo "python /climweb/web/src/climweb/manage.py collectstatic --clear --noinput"
-    #     ./manage.py collectstatic --clear --noinput
-    # fi
-
-
+      # collect staticfiles
+     if [ "$COLLECT_STATICFILES_ON_STARTUP" = "true" ]; then
+         echo "python manage.py collectstatic --clear --noinput"
+         /app/manage.py collectstatic --clear --noinput
+     fi
 }
 
 
@@ -75,9 +73,9 @@ run_server() {
     run_setup_commands_if_configured
 
     if [[ "$1" = "wsgi" ]]; then
-        STARTUP_ARGS=(climtech.wsgi:application)
+        STARTUP_ARGS=(climtech.config.wsgi:application)
     elif [[ "$1" = "asgi" ]]; then
-        STARTUP_ARGS=(-k uvicorn.workers.UvicornWorker climtech.asgi:application)
+        STARTUP_ARGS=(-k uvicorn.workers.UvicornWorker climtech.config.asgi:application)
     else
         echo -e "\e[31mUnknown run_server argument $1 \e[0m" >&2
         exit 1

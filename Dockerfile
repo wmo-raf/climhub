@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:1.5
+
 # (Keep the version in sync with the node install below)
 FROM node:20 as frontend
 
@@ -19,14 +21,21 @@ ENV UID=${UID:-1000}
 ARG GID
 ENV GID=${GID:-1000}
 
-ENV DJANGO_SETTINGS_MODULE=climtech.settings.production \
-    GUNICORN_CMD_ARGS="--max-requests 1200 --max-requests-jitter 50 --access-logfile -" \
-    PATH=/home/climtech/.local/bin:/venv/bin:$PATH \
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# We might be running as a user which already exists in this image. In that situation
+# Everything is OK and we should just continue on.
+RUN groupadd -g $GID climtech_docker_group || exit 0
+RUN useradd --shell /bin/bash -u $UID -g $GID -o -c "" -m climtech_docker_user -l || exit 0
+ENV DOCKER_USER=climtech_docker_user
+
+ENV POSTGRES_VERSION=15
+
+ENV GUNICORN_CMD_ARGS="--max-requests 1200 --max-requests-jitter 50 --access-logfile -" \
     PORT=8000 \
     PYTHONUNBUFFERED=1 \
     VIRTUAL_ENV=/venv \
-    WEB_CONCURRENCY=3 \
-    POSTGRES_VERSION=15
+    WEB_CONCURRENCY=3
 
 # Install operating system dependencies.
 RUN apt-get update --yes --quiet \
@@ -40,16 +49,9 @@ RUN apt-get update --yes --quiet \
     tini \
     libpq-dev \
     libgeos-dev \
-    imagemagick \
-    libmagic1 \
-    libcairo2-dev \
-    libpangocairo-1.0-0 \
-    libffi-dev \
     python3-pip \
     python3-dev \
     python3-venv \
-    inotify-tools \
-    poppler-utils \
     git \
     gosu \
     && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
@@ -59,45 +61,39 @@ RUN apt-get update --yes --quiet \
     jpegoptim pngquant gifsicle libjpeg-progs webp && \
     rm -rf /var/lib/apt/lists/*
 
-ENV DOCKER_COMPOSE_WAIT_VERSION=2.12.1
+ARG DOCKER_COMPOSE_WAIT_VERSION
+ENV DOCKER_COMPOSE_WAIT_VERSION=${DOCKER_COMPOSE_WAIT_VERSION:-2.12.1}
+ARG DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX
+ENV DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX=${DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX:-}
 
 # Install docker-compose wait
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$DOCKER_COMPOSE_WAIT_VERSION/wait /wait
-RUN chmod +x /wait
-WORKDIR /app
-EXPOSE 8000
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$DOCKER_COMPOSE_WAIT_VERSION/wait${DOCKER_COMPOSE_WAIT_PLATFORM_SUFFIX} /wait
+RUN chown $UID:$GID /wait &&  chmod +x /wait
+
+RUN mkdir -p /app /venv /.cache && chown $UID:$GID /app /venv /.cache
+
+USER $UID:$GID
 
 # Create a virtual environment and install Poetry
-RUN python3 -m venv /venv \
-    && pip3 install poetry==$POETRY_VERSION
+RUN python3 -m venv /venv && /venv/bin/pip install --upgrade pip wheel  && /venv/bin/pip install poetry==$POETRY_VERSION
 
-# Create a non-root application user.
-# RUN groupadd --gid $GID --force climtech \
-#     && useradd --create-home --uid $UID -g climtech climtech
-RUN chown --recursive $UID:$GID /app /venv
+ENV PATH="/venv/bin:$PATH"
 
+WORKDIR /app
 
 # This stage builds the image that will run in production
 FROM backend as prod
 
-# Switch to application user
-USER $UID:$GID
-
 # Install production dependencies
-COPY --chown=$UID:$GID pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock ./
+
 RUN poetry install --only main --no-root
 
 # Copy in application code and install the root package
 COPY --chown=$UID:$GID . .
 RUN poetry install --only-root
 
-
-
-# Collect static files
-RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
-
-COPY --chown=$UID:$GID --from=frontend ./climtech/static_compiled /climtech/static_compiled
-
+COPY --chown=$UID:$GID --from=frontend ./climtech/static_compiled ./climtech/static_compiled
 
 # RUN SECRET_KEY=none django-admin collectstatic --noinput --clear
 COPY --chown=$UID:$GID docker-entrypoint.sh ./
@@ -106,9 +102,12 @@ RUN chmod a+x ./docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/bin/tini", "--", "./docker-entrypoint.sh"]
 
-# Run application
-CMD ["gunicorn", "climtech.wsgi:application"]
+ENV PATH="/venv/bin:$PATH"
 
+ENV DJANGO_SETTINGS_MODULE="climtech.config.settings.production"
+
+# Run application
+CMD ["gunicorn"]
 
 # This stage builds the image that we use for development
 FROM backend AS dev

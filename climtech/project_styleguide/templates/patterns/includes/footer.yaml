@@ -33,8 +33,6 @@ context:
               url: '#'
             - text: FAQs
               url: '#'
-            - text: Are we headless yet?
-              url: '#'
       - value:
           heading: Community
           links:
