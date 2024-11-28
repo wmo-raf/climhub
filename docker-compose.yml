@@ -73,6 +73,7 @@ x-climtech-variables: &climtech-variables
 
   #Logging
   CLIMTECH_LOG_LEVEL: ${CLIMTECH_LOG_LEVEL:-INFO}
+  CLIMTECH_DEPLOYMENT_ENV: ${CLIMTECH_DEPLOYMENT_ENV:-production}
 
 services:
   climtech_db:
