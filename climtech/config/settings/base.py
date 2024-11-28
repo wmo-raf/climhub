@@ -13,6 +13,7 @@ import sys
 
 import dj_database_url
 import environ
+from climtech.config.telemetry.utils import otel_is_enabled
 
 # Configuration from environment variables
 # Alternatively, you can set these in a local.py file on the server
@@ -96,6 +97,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
+
+if otel_is_enabled():
+    MIDDLEWARE += ["climtech.config.telemetry.middleware.OTELMiddleware"]
 
 ROOT_URLCONF = "climtech.config.urls"
 WSGI_APPLICATION = "climtech.config.wsgi.application"
@@ -332,6 +336,8 @@ PERMISSIONS_POLICY = {
 
 REFERRER_POLICY = env.str("SECURE_REFERRER_POLICY", default="no-referrer-when-downgrade")
 
+CLIMTECH_LOG_LEVEL = env.str("CLIMTECH_LOG_LEVEL", "INFO")
+
 # Logging
 LOGGING = {
     "version": 1,
@@ -356,12 +362,12 @@ LOGGING = {
     "loggers": {
         "climtech": {
             "handlers": ["console", "mail_admins"],
-            "level": "INFO",
+            "level": CLIMTECH_LOG_LEVEL,
             "propagate": False,
         },
         "wagtail": {
             "handlers": ["console", "mail_admins"],
-            "level": "INFO",
+            "level": CLIMTECH_LOG_LEVEL,
             "propagate": False,
         },
         "django.request": {
@@ -374,6 +380,15 @@ LOGGING = {
             "level": "ERROR",
             "propagate": False,
         },
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": CLIMTECH_LOG_LEVEL,
     },
 }
 
