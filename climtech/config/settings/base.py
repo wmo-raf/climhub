@@ -221,9 +221,12 @@ SITEWIDE_ALERT_SMAXAGE = env.int("SITEWIDE_ALERT_SMAXAGE", 60 * 60 * 24 * 7)
 
 # Cache
 # Use Redis or database as the cache backend
+REDIS_TLS_URL = env.str("REDIS_TLS_URL", "")
+REDIS_URL = env.str("REDIS_URL", "")
 
 # Prefer the TLS connection URL over non
-REDIS_URL = env.str("REDIS_TLS_URL", env.str("REDIS_URL", ""))
+if REDIS_TLS_URL:
+    REDIS_URL = REDIS_TLS_URL
 
 if REDIS_URL:
     connection_pool_kwargs = {}
