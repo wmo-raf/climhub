@@ -73,7 +73,6 @@ def setup_logging():
 
 
 def setup_telemetry(add_django_instrumentation: bool):
-    print("Setting up telemetry...")
     """
     Sets up logging and when the env var CLIMTECH_ENABLE_OTEL is set to any non-blank
     string and this function is called metrics will be setup and sent according to
@@ -84,6 +83,8 @@ def setup_telemetry(add_django_instrumentation: bool):
     :param add_django_instrumentation: Enables specific instrumentation for a django
         process that is processing requests. Don't enable this for a celery process etc.
     """
+    
+    print("Setting up telemetry...")
     
     if otel_is_enabled():
         existing_provider = trace.get_tracer_provider()
