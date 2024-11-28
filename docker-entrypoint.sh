@@ -98,6 +98,24 @@ run_server() {
         "${@:2}"
 }
 
+setup_otel_vars(){
+  # These key value pairs will be exported on every log/metric/trace by any otel
+  # exporters running in subprocesses launched by this script.
+  EXTRA_OTEL_RESOURCE_ATTRIBUTES="service.namespace=Climtech,"
+  EXTRA_OTEL_RESOURCE_ATTRIBUTES+="deployment.environment=${CLIMTECH_DEPLOYMENT_ENV:-unknown}"
+
+  if [[ -n "${OTEL_RESOURCE_ATTRIBUTES:-}" ]]; then
+    # If the container has been launched with some extra otel attributes, make sure not
+    # to override them with our Climtech specific ones.
+    OTEL_RESOURCE_ATTRIBUTES="${EXTRA_OTEL_RESOURCE_ATTRIBUTES},${OTEL_RESOURCE_ATTRIBUTES}"
+  else
+    OTEL_RESOURCE_ATTRIBUTES="$EXTRA_OTEL_RESOURCE_ATTRIBUTES"
+  fi
+  export OTEL_RESOURCE_ATTRIBUTES
+  echo "OTEL_RESOURCE_ATTRIBUTES=$OTEL_RESOURCE_ATTRIBUTES"
+}
+
+
 # ======================================================
 # COMMANDS
 # ======================================================
@@ -108,27 +126,28 @@ if [[ -z "${1:-}" ]]; then
     exit 1
 fi
 
-# activate virtualenv
-# source /climtech/venv/bin/activate
-
-
 show_startup_banner
 
 # wait for required services to be available, using docker-compose-wait
 /wait
 
+setup_otel_vars
 
 case "$1" in
 gunicorn)
+    export OTEL_SERVICE_NAME="climtech-asgi"
     run_server asgi "${@:2}"
     ;;
 gunicorn-wsgi)
+    export OTEL_SERVICE_NAME="climtech-wsgi"
     run_server wsgi "${@:2}"
     ;;
 manage)
+    export OTEL_SERVICE_NAME=climtech-manage
     exec python3 manage.py "${@:2}"
     ;;
 shell)
+    export OTEL_SERVICE_NAME=climtech-shell
     exec python3 manage.py shell
     ;;
 *)
