@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Prefetch
 from django.db.models.functions import Lower
 from django.urls import reverse
+import uuid
 
 from wagtail.admin.panels import FieldPanel, HelpPanel, MultiFieldPanel
 from wagtail.fields import RichTextField
@@ -34,6 +35,10 @@ default_about_text = " ".join(
 
 
 class PackagesPage(Page, SocialMediaMixin, CrossPageMixin):
+    max_count = 1
+    parent_page_types = ["core.HomePage"]
+    subpage_types = []
+
     subtitle = models.CharField(max_length=255)
     about_title = models.CharField(max_length=255, default="About")
     about_text = RichTextField(
@@ -64,32 +69,27 @@ class PackagesPage(Page, SocialMediaMixin, CrossPageMixin):
         index.SearchField("about_text"),
     ]
 
-
 class Package(models.Model):
     publish = models.BooleanField(default=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
-    uid = models.IntegerField(
-        unique=True, editable=False, help_text="The DjangoPackages.org id"
-    )
+
+    uid = models.AutoField(primary_key=True, unique=True, editable=False)
 
     repo_url = models.URLField(blank=True)
-    pypi_version = models.CharField(blank=True, max_length=255)
-    repo_forks = models.IntegerField(null=True, blank=True)
     repo_description = models.TextField(blank=True)
     pypi_url = models.URLField(blank=True)
     documentation_url = models.URLField(blank=True)
-    repo_watchers = models.IntegerField(null=True, blank=True)
-    participants = ArrayField(models.CharField(max_length=255))
 
     panels = [
         FieldPanel("publish"),
         MultiFieldPanel(
             [
                 HelpPanel(content=warning),
-                FieldPanel("title", widget=readonly),
-                FieldPanel("slug", widget=readonly),
-                FieldPanel("repo_description", widget=readonly),
+                FieldPanel("title",),
+                FieldPanel("slug",),
+                FieldPanel("repo_description"),
+                FieldPanel("repo_url"),
             ],
             heading="DjangoPackages.org data",
         ),
@@ -121,9 +121,6 @@ class Grid(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True)
-    uid = models.IntegerField(
-        unique=True, editable=False, help_text="The DjangoPackages.org id"
-    )
     packages = models.ManyToManyField(Package, blank=True)
 
     panels = [
@@ -131,19 +128,17 @@ class Grid(models.Model):
         MultiFieldPanel(
             [
                 HelpPanel(content=warning),
-                FieldPanel("title", widget=readonly),
-                FieldPanel("slug", widget=readonly),
-                FieldPanel("description", widget=readonly),
+                FieldPanel("title"),
+                FieldPanel("slug"),
+                FieldPanel("description"),
+                FieldPanel("packages"),
             ],
-            heading="DjangoPackages.org data",
+            heading="Data",
         ),
     ]
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return f"https://djangopackages.org/grids/g/{self.slug}/"
 
     def get_admin_url(self):
         if hasattr(self, "model_viewset"):

@@ -41,7 +41,7 @@ milestones_query = """
 graphql_query = {
     "query": """
         query {
-          repository(owner: "wagtail", name: "roadmap") {
+          repository(owner: "wmo-raf", name: "climweb") {
 
             # "Future" milestone has no due date, fetch separately because
             # null values are sorted last in descending order.
@@ -76,6 +76,11 @@ def process(token=""):
     if not token:
         token = settings.GITHUB_ROADMAP_ACCESS_TOKEN
 
+
+    print("graphql_query",graphql_query)
+    print("GITHUB_ROADMAP_ACCESS_TOKEN",settings.GITHUB_ROADMAP_ACCESS_TOKEN)
+    print("GITHUB_ROADMAP_ACCESS_TOKEN",token)
+
     response = requests.post(
         GITHUB_GRAPHQL_API_URL,
         headers={
@@ -85,6 +90,7 @@ def process(token=""):
         json=graphql_query,
     )
     data = response.json().get("data")
+    print(response.json())
     if not data:
         raise ValueError(
             "Unable to import data from GitHub. Make sure the token is valid."

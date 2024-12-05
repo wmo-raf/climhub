@@ -17,6 +17,7 @@ class ShowcasePage(SocialMediaMixin, CrossPageMixin, Page):
     template = "patterns/pages/showcase_page/showcase_page.html"
 
     parent_page_types = ["core.HomePage"]
+    subpage_types = []
 
     introduction = RichTextField(blank=True)
     cta = StreamField(

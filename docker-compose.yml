@@ -5,6 +5,7 @@ x-climtech-variables: &climtech-variables
   APP_NAME: ${APP_NAME:-ClimTech}
   GUNICORN_NUM_OF_WORKERS: ${CMS_NUM_OF_WORKERS:-4}
   CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+  DEBUG: ${DEBUG:-False}
 
   # database
   DB_USER: ${DB_USER:?}
@@ -62,6 +63,8 @@ x-climtech-variables: &climtech-variables
   GOOGLE_TAG_MANAGER_ID: ${GOOGLE_TAG_MANAGER_ID:-}
 
   SECRET_KEY: ${SECRET_KEY:-}
+  DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-}
+
 
 services:
   climtech_db:
@@ -111,11 +114,12 @@ services:
       PRIMARY_HOST: localhost:8000
       REDIS_URL: redis://:${REDIS_PASSWORD:?}@climtech_redis:6379/0
     ports:
-      - 8000
+      - 8000:8000
     volumes:
       - ${STATIC_VOLUME}:/app/static
       - ${MEDIA_VOLUME}:/app/media
       - ${BACKUP_VOLUME}:/app/backup
+      # - .:/app/ # use in development
     depends_on:
       climtech_db:
         condition: service_healthy

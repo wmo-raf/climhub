@@ -9,6 +9,10 @@ from wagtail.search import index
 
 
 class NewsletterPage(Page):
+
+    parent_page_types = ["newsletter.NewsletterIndexPage"]
+    subpage_types = []
+
     date = models.DateField("Newsletter date")
     intro = RichTextField(blank=True)
     body = RichTextField()
@@ -33,6 +37,10 @@ class NewsletterPage(Page):
 
 
 class NewsletterIndexPage(Page):
+    parent_page_types = ["core.HomePage"]
+    subpage_types = ["newsletter.NewsletterPage"]
+
+    max_count = 1
     intro = RichTextField(blank=True)
     body = RichTextField()
 

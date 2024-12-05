@@ -113,19 +113,24 @@ CMD ["gunicorn"]
 FROM backend AS dev
 
 # Install Node.js because newer versions of Heroku CLI have a node binary dependency
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt-get install -y nodejs
+# RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+# RUN apt-get install -y nodejs
 
 # Switch to the application user
-USER climtech
+USER $UID:$GID
 
 # Install development dependencies
-COPY --chown=climtech pyproject.toml poetry.lock ./
+COPY --chown=$UID:$GID pyproject.toml poetry.lock ./
 RUN poetry install --no-root
 
+# Copy in application code and install the root package
+COPY --chown=$UID:$GID . .
 # Pull in the node modules for the frontend
-COPY --chown=climtech --from=frontend ./node_modules ./node_modules
+COPY --chown=$UID:$GID --from=frontend ./node_modules ./node_modules
+
 
 # Make sure the working directory is on PYTHONPATH (so django-admin etc. can
 # import climtech)
 ENV PYTHONPATH=/app
+
+ENV DJANGO_SETTINGS_MODULE="climtech.config.settings.dev"

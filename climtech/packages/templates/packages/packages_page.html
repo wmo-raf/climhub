@@ -17,7 +17,7 @@
                 {% include "patterns/components/buttons/button.html" with arrow=False url="#about" title=page.about_title classes="hero__button" %}
             </div>
 
-            {% include "patterns/components/icon/icon.html" with icon="heart" classes="icon--primary hero__icon" %}
+            {% include "patterns/components/icon/icon.html" with icon="code-file" classes="icon--primary hero__icon" %}
         </div>
     </div>
 
@@ -45,12 +45,11 @@
                         <div class="overview__section-title">
                             <h3 class="heading-three overview__sub-heading">
                                 <a class="overview__sub-heading-link" href="{{ grid.get_absolute_url }}">{{ grid.display_title }}</a>
-                                {% if perms.packages.change_grid %}
-                                    <a class="overview__sub-heading-link overview__sub-heading-link--edit" href="{{ grid.get_admin_url }}">✏️</a>
-                                {% endif %}
-                            </h3>
-                            <p class="overview__description">{{ grid.description }} - <a class="overview__description-link" href="{{ grid.get_absolute_url }}">View on Djangopackages.org</a></p>
 
+                            </h3>
+                            {% if grid.description %}
+                                        <p class="overview-item__description">{{ grid.description }}</p>
+                                    {% endif %}
                         </div>
 
                         <div class="overview__content grid">
@@ -59,12 +58,10 @@
 
                                 <article class="overview-item">
                                     <h4 class="overview-item__heading">
-                                        <a class="overview-item__link" href="{{ package.get_absolute_url }}">
+                                        <a class="overview-item__link" href="{{ package.repo_url }}">
                                             {{ package.title }}
                                         </a>
-                                        {% if perms.packages.change_package %}
-                                            <a class="overview-item__link overview-item__link--edit" href="{{ package.get_admin_url }}">✏️</a>
-                                        {% endif %}
+
                                     </h4>
                                     {% if package.repo_description %}
                                         <p class="overview-item__description">{{ package.repo_description }}</p>

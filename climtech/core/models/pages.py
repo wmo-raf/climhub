@@ -27,6 +27,7 @@ class HomePage(SocialMediaMixin, CrossPageMixin, Page):
         "roadmap.RoadmapPage",
         "services.ServicesPage",
     ]
+    max_count=1
 
     # ----------------- Hero -----------------
     heading = models.TextField(verbose_name="Heading", blank=True)
@@ -110,6 +111,8 @@ class ContentPage(Page, HeroMixin, SocialMediaMixin, CrossPageMixin):
     template = "patterns/pages/content_page/content_page.html"
 
     parent_page_types = ["core.HomePage"]
+
+
     # subpage_types = []  # TODO
 
     body = StreamField(ContentStoryBlock())

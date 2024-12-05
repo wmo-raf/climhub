@@ -9,6 +9,8 @@ from climtech.services.blocks import SectionBlock
 
 
 class ServicesPage(Page):
+    parent_page_types = ["core.HomePage"]
+    subpage_types = []
     intro = models.TextField(null=True, blank=True)
     body = fields.StreamField(
         blocks.StreamBlock(

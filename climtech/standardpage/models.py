@@ -10,6 +10,8 @@ from climtech.utils.models import CrossPageMixin, SocialMediaMixin
 
 
 class StandardPage(Page, SocialMediaMixin, CrossPageMixin):
+    parent_page_types = ["core.HomePage"]
+    subpage_types = []
     introduction = models.CharField(max_length=511)
     body = StreamField(StoryBlock())
 

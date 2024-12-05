@@ -81,6 +81,7 @@ class FeatureDescription(ClusterableModel):
 class FeatureIndexPage(Page):
     template = "patterns/pages/feature_index_page/feature_index_page.html"
 
+    parent_page_types = ["core.HomePage"]
     subheading = models.TextField(verbose_name="Sub heading", blank=True)
     features = StreamField([("features", FeatureIndexBlock())], blank=True, max_num=1)
     cta = StreamField([("cta", StandaloneCTABlock())], blank=True, max_num=1)

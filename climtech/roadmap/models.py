@@ -27,6 +27,7 @@ class State(models.TextChoices):
 class RoadmapPage(Page, SocialMediaMixin):
     parent_page_types = ["core.HomePage"]
     subpage_types = []
+    max_count = 1
 
     intro = RichTextField(
         verbose_name="Intro",

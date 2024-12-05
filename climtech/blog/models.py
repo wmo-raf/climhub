@@ -28,6 +28,7 @@ class FeaturedPost(Orderable):
 
 class BlogIndexPage(Page, SocialMediaMixin, CrossPageMixin):
     template = "patterns/pages/blog/blog_index_page.html"
+    parent_page_types = ["core.HomePage"]
     subpage_types = ["blog.BlogPage"]
 
     @property
@@ -129,6 +130,7 @@ class Author(index.Indexed, models.Model):
 
 class BlogPage(Page, SocialMediaMixin, CrossPageMixin):
     template = "patterns/pages/blog/blog_page.html"
+    parent_page_types = ["blog.BlogIndexPage"]
     subpage_types = []
     canonical_url = models.URLField(blank=True)
     author = models.ForeignKey(
