@@ -55,6 +55,7 @@ x-climtech-variables: &climtech-variables
   GITHUB_ROADMAP_ACCESS_TOKEN: ${GITHUB_ROADMAP_ACCESS_TOKEN:-}
 
   # mailchimp
+  # mailchimp
   MAILCHIMP_NEWSLETTER_ID: ${MAILCHIMP_NEWSLETTER_ID:-}
   MAILCHIMP_ACCOUNT_ID: ${MAILCHIMP_ACCOUNT_ID:-}
 
@@ -63,8 +64,6 @@ x-climtech-variables: &climtech-variables
   GOOGLE_TAG_MANAGER_ID: ${GOOGLE_TAG_MANAGER_ID:-}
 
   SECRET_KEY: ${SECRET_KEY:-}
-  DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-}
-
 
   # OpenTelemetry
   CLIMTECH_ENABLE_OTEL: ${CLIMTECH_ENABLE_OTEL:-False}
@@ -82,6 +81,7 @@ services:
   climtech_db:
     container_name: climtech_db
     image: ${DB_IMAGE:-postgis/postgis:15-master}
+    command: postgres -c max_connections=300 -c shared_buffers=2GB
     expose:
       - 5432
     environment:
@@ -126,12 +126,11 @@ services:
       PRIMARY_HOST: localhost:8000
       REDIS_URL: redis://:${REDIS_PASSWORD:?}@climtech_redis:6379/0
     ports:
-      - 8000:8000
+      - 8000
     volumes:
       - ${STATIC_VOLUME}:/app/static
       - ${MEDIA_VOLUME}:/app/media
       - ${BACKUP_VOLUME}:/app/backup
-      # - .:/app/ # use in development
     depends_on:
       climtech_db:
         condition: service_healthy
