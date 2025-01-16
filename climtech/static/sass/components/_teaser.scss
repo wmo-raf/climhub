@@ -2,7 +2,7 @@
     $root: &;
     color: var(--color--text);
     text-decoration: none;
-    margin-bottom: 140px;
+    padding:140px 0;
 
     &:hover {
         #{$root}__heading {

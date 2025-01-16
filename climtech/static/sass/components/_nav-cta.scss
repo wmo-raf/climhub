@@ -5,7 +5,7 @@
     color: $color--white;
     text-decoration: none;
     padding: 20px 20px 50px 20px;
-    background-color: var(--color--highlight);
+    background-color: var(--color--accent-dark);
 
     @include media-query(medium) {
         padding: 20px 50px 50px 50px;
@@ -18,10 +18,10 @@
 
     &:hover,
     &:focus {
-        color: var(--color--background);
+        color: $color--white;
 
         #{$root}__heading {
-            color: var(--color--accent-100);
+            color: $color--white;
         }
 
         #{$root}__arrow {
@@ -39,10 +39,10 @@
         @include z-index(base);
         position: absolute;
         top: 30px;
-        right: 20px;
-        width: 190px;
+        right: 25px;
+        width: 150px;
         height: auto;
-        fill: var(--color--accent-200);
+        fill: $color--white;
 
         @media only screen and (min-width: $header-desktop) {
             top: 30px;
@@ -71,13 +71,12 @@
 
         @media only screen and (min-width: $header-desktop) {
             padding-right: 0;
-            font-size: 55px;
         }
     }
 
     &__subheading,
     &__description {
-        font-size: 20px;
+        font-size: 15px;
     }
 
     &__subheading {

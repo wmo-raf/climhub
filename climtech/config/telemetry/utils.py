@@ -20,7 +20,7 @@ def disable_instrumentation(wrapped_function):
         result = wrapped_function(*args, **kwargs)
         detach(token)
         return result
-    
+
     return _wrapper
 
 
@@ -40,9 +40,10 @@ class BatchBaggageSpanProcessor(BatchSpanProcessor):
 
 
 def setup_user_in_baggage_and_spans(user, request):
+    print("otel_is_enabled", otel_is_enabled())
     if otel_is_enabled():
         span = get_current_span()
-        
+
         def _set(name, attr, source, set_baggage=False):
             try:
                 value = attrgetter(attr)(source)
@@ -52,7 +53,7 @@ def setup_user_in_baggage_and_spans(user, request):
                 span.set_attribute(name, value)
                 if set_baggage:
                     context.attach(baggage.set_baggage(name, value))
-        
+
         _set("user.id", "id", user, set_baggage=True)
         _set("user.untrusted_client_session_id", "untrusted_client_session_id", user)
         _set("user.token_id", "user_token.id", request)
@@ -70,9 +71,9 @@ def _climtech_trace_func(wrapped_func, tracer: Tracer):
                 span.set_status(Status(StatusCode.ERROR))
                 span.record_exception(ex)
                 raise ex
-        
+
         return result
-    
+
     return _wrapper
 
 
@@ -103,14 +104,14 @@ def climtech_trace_methods(
     names.
     :param abc: Whether this class should also be an abstract base class.
     """
-    
+
     if only and not isinstance(only, list):
         only = [only]
     if exclude and not isinstance(exclude, list):
         exclude = [exclude]
-    
+
     super_class = ABCMeta if abc else type
-    
+
     class TraceMethodsMetaClass(super_class):
         def __new__(cls, name, bases, local):
             for attr in local:
@@ -120,7 +121,7 @@ def climtech_trace_methods(
                 if inspect.isfunction(value):
                     local[attr] = _climtech_trace_func(value, tracer)
             return super().__new__(cls, name, bases, local)
-        
+
         @staticmethod
         def _should_trace_attr(attr):
             return (
@@ -128,7 +129,7 @@ def climtech_trace_methods(
                     or (only and attr not in only)
                     or (exclude and attr in exclude)
             )
-    
+
     return TraceMethodsMetaClass
 
 
@@ -140,7 +141,7 @@ def climtech_trace(tracer):
     :param tracer: An otel Tracer, add `tracer = trace.get_tracer(__name__)` to the top
         of your file to get one.
     """
-    
+
     if not isinstance(tracer, Tracer):
         raise Exception(
             f"Must provider a tracer to baserow_trace, instead you gave me a "
@@ -148,10 +149,10 @@ def climtech_trace(tracer):
             "one using "
             "`tracer = trace.get_tracer(__name__)`."
         )
-    
+
     def inner(wrapped_function_or_cls):
         return _climtech_trace_func(wrapped_function_or_cls, tracer)
-    
+
     return inner
 
 
@@ -163,7 +164,7 @@ def add_climtech_trace_attrs(**kwargs):
     :param kwargs: Key value pairs, the key will be the attr name prefixed with
         baserow. and the value will be the span attribute value.
     """
-    
+
     span = get_current_span()
     for key, value in kwargs.items():
         span.set_attribute(f"{CLIMTECH_OTEL_TRACE_ATTR_PREFIX}{key}", value)

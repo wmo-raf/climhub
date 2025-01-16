@@ -21,11 +21,13 @@
         }
     }
 
+    &__first {
+        background-color: var(--color--highlight) !important;
+        color: #fff !important;
+    }
+
     &--home {
         margin-bottom: 50px;
-
-        @include media-query(medium) {
-            margin-bottom: 100px;
-        }
+        padding-bottom: 50px;
     }
 }
