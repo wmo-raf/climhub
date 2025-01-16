@@ -72,6 +72,8 @@ RUN chown $UID:$GID /wait &&  chmod +x /wait
 
 RUN mkdir -p /app /venv /.cache && chown $UID:$GID /app /venv /.cache
 
+USER $UID:$GID
+
 # Create a virtual environment and install Poetry
 RUN python3 -m venv /venv && /venv/bin/pip install --upgrade pip wheel  && /venv/bin/pip install poetry==$POETRY_VERSION
 
@@ -81,8 +83,6 @@ WORKDIR /app
 
 # This stage builds the image that will run in production
 FROM backend as prod
-
-USER $UID:$GID
 
 # Install production dependencies
 COPY pyproject.toml poetry.lock ./
