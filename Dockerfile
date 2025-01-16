@@ -72,8 +72,6 @@ RUN chown $UID:$GID /wait &&  chmod +x /wait
 
 RUN mkdir -p /app /venv /.cache && chown $UID:$GID /app /venv /.cache
 
-USER $UID:$GID
-
 # Create a virtual environment and install Poetry
 RUN python3 -m venv /venv && /venv/bin/pip install --upgrade pip wheel  && /venv/bin/pip install poetry==$POETRY_VERSION
 
@@ -83,6 +81,8 @@ WORKDIR /app
 
 # This stage builds the image that will run in production
 FROM backend as prod
+
+USER $UID:$GID
 
 # Install production dependencies
 COPY pyproject.toml poetry.lock ./
@@ -112,16 +112,17 @@ CMD ["gunicorn"]
 # This stage builds the image that we use for development
 FROM backend AS dev
 
-# Install Node.js because newer versions of Heroku CLI have a node binary dependency
-# RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-# RUN apt-get install -y nodejs
-
 # Switch to the application user
-USER $UID:$GID
+
+# Install Node.js because newer versions of Heroku CLI have a node binary dependency
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
 
 # Install development dependencies
 COPY --chown=$UID:$GID pyproject.toml poetry.lock ./
 RUN poetry install --no-root
+
+USER $UID:$GID
 
 # Copy in application code and install the root package
 COPY --chown=$UID:$GID . .

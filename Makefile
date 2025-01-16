@@ -18,11 +18,14 @@ setup: build  ## 🔨 - Set instance up
 build:  ## 🔨 - Build Docker container
 	bash -c "docker-compose build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g)"
 
+start-dev:	## 🎬 - Start containers
+	docker-compose -f docker-compose-dev.yml up --build
+
 start:	## 🎬 - Start containers
 	docker-compose up
 
 sh:	## Enter the climtech_web container
-	docker-compose exec climtech_web bash
+	docker-compose -f docker-compose-dev.yml exec climtech_web bash
 
 runserver:	## 🏃 - Run Django server
 	docker-compose exec climtech_web django-admin runserver 0.0.0.0:8000

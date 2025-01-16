@@ -1,6 +1,6 @@
 context:
   value:
     heading: "What's new in ClimTech"
-    sub_heading: 'Sign up for events, features and adventures on ClimTech'
+    sub_heading: 'Sign up for latest news and updates on ClimTech'
     mailchimp_account_id: 'Fake'
     mailchimp_newsletter_id: 'Fake'

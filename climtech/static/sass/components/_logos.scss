@@ -43,14 +43,14 @@
     }
 
     &__list-item {
-        min-width: 100px;
-        max-width: 100px;
-        flex-basis: 100px;
+        min-width: 150px;
+        max-width: 150px;
+        flex-basis: 150px;
 
         .theme-dark & {
-            min-width: 120px;
-            max-width: 120px;
-            flex-basis: 120px;
+            min-width: 150px;
+            max-width: 150px;
+            flex-basis: 150px;
         }
     }
 

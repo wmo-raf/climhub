@@ -84,7 +84,7 @@
     }
 
     &--dark-theme {
-        background-color: #333;
+        background-color: var(--color--accent-dark);
         padding: 80px 0;
 
         @include media-query(medium) {
@@ -103,12 +103,12 @@
 
         // Icon overrides
         .icon__svg-bg {
-            stroke: var(--color--accent-200);
+            stroke: var(--color--accent-100);
             fill: transparent;
         }
 
         .icon__svg-fg {
-            fill: var(--color--accent-200);
+            fill: var(--color--accent-100);
             stroke: none;
             opacity: 0.5;
             transform: rotate(3deg) translate(40px, -20px) scale(0.9);

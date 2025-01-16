@@ -2,7 +2,7 @@
     $root: &;
 
     &__base {
-        background-color: #000;
+        background-color: var(--color--accent-dark);
         padding: 60px 0;
         color: $color--white;
     }

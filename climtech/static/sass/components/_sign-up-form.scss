@@ -121,11 +121,11 @@
     }
 
     &--footer {
-        background-color: #000;
+        background-color: transparent;
         color: $color--white;
 
         #{$root}__input {
-            background-color: #000;
+            background-color: transparent;
             border: 1px solid $color--white;
             color: $color--white;
             border-radius: 6px;

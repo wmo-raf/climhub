@@ -156,16 +156,16 @@ if env.str("BASIC_AUTH_ENABLED", "false").lower() == "true":
     MIDDLEWARE.insert(0, "baipw.middleware.BasicAuthIPWhitelistMiddleware")
     BASIC_AUTH_LOGIN = env.str("BASIC_AUTH_LOGIN", "wagtailorg")
     BASIC_AUTH_PASSWORD = env.str("BASIC_AUTH_PASSWORD", "showmewagtailorg")
-    
+
     # Wagtail requires Authorization header to be present for the previews
     BASIC_AUTH_DISABLE_CONSUMING_AUTHORIZATION_HEADER = True
-    
+
     # Paths that shouldn't be protected by basic auth
     if "BASIC_AUTH_WHITELISTED_PATHS" in env:
         BASIC_AUTH_WHITELISTED_PATHS = env.list("BASIC_AUTH_WHITELISTED_PATHS", cast=None, default=[])
-    
+
     BASIC_AUTH_WHITELISTED_IP_NETWORKS = []
-    
+
     if "BASIC_AUTH_WHITELISTED_HTTP_HOSTS" in env:
         BASIC_AUTH_WHITELISTED_HTTP_HOSTS = env.list("BASIC_AUTH_WHITELISTED_HTTP_HOSTS", cast=None, default=[])
 
@@ -234,20 +234,20 @@ if REDIS_TLS_URL:
 
 if REDIS_URL:
     connection_pool_kwargs = {}
-    
+
     if REDIS_URL.startswith("rediss"):
         # Heroku Redis uses self-signed certificates for secure redis conections.
         # https://stackoverflow.com/a/66286068
         # When using TLS, we need to disable certificate validation checks.
         connection_pool_kwargs["ssl_cert_reqs"] = None
-    
+
     redis_options = {
         "IGNORE_EXCEPTIONS": True,
         "SOCKET_CONNECT_TIMEOUT": 2,  # seconds
         "SOCKET_TIMEOUT": 2,  # seconds
         "CONNECTION_POOL_KWARGS": connection_pool_kwargs,
     }
-    
+
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
@@ -255,7 +255,7 @@ if REDIS_URL:
             "OPTIONS": redis_options,
         },
     }
-    
+
     DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 else:
     CACHES = {
@@ -408,6 +408,7 @@ WAGTAILIMAGES_FORMAT_CONVERSIONS = {
 WILLOW_OPTIMIZERS = True
 
 if "PRIMARY_HOST" in env:
+
     WAGTAILADMIN_BASE_URL = "https://%s" % env.str("PRIMARY_HOST")
 
 # https://docs.wagtail.org/en/v2.8.1/releases/2.8.html#responsive-html-for-embeds-no-longer-added-by-default
@@ -428,18 +429,18 @@ if "SENTRY_DSN" in env and not is_in_shell:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
     from sentry_sdk.utils import get_default_release
-    
+
     sentry_kwargs = {
         "dsn": env.str("SENTRY_DSN"),
         "integrations": [DjangoIntegration()],
     }
-    
+
     # There's a chooser to toggle between environments at the top right corner on sentry.io
     # Values are typically 'staging' or 'production' but can be set to anything else if needed.
     # heroku config:set SENTRY_ENVIRONMENT=production
     if "SENTRY_ENVIRONMENT" in env:
         sentry_kwargs.update({"environment": env.str("SENTRY_ENVIRONMENT")})
-    
+
     release = get_default_release()
     if release is None:
         try:
@@ -451,7 +452,7 @@ if "SENTRY_DSN" in env and not is_in_shell:
             except KeyError:
                 # If there's no commit hash, we do not set a specific release.
                 release = None
-    
+
     sentry_kwargs.update({"release": release})
     sentry_sdk.init(**sentry_kwargs)
 
