@@ -113,7 +113,7 @@ CMD ["gunicorn"]
 FROM backend AS dev
 
 # Switch to the application user
-
+USER root
 # Install Node.js because newer versions of Heroku CLI have a node binary dependency
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs

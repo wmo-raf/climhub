@@ -1,6 +1,6 @@
 .hero {
     $root: &;
-    @include sf-spacing(6);
+    @include sf-spacing(8);
     position: relative;
     grid-column: 2 / span 2;
 
@@ -146,7 +146,15 @@
         margin-bottom: 0;
 
         #{$root}__inner {
-            max-width: 70%;
+            max-width: 100%;
+
+            @include media-query(medium) {
+                max-width: 70%;
+            }
+
+            @include media-query(large) {
+                max-width: 60%;
+            }
         }
 
         #{$root}__subheading {
