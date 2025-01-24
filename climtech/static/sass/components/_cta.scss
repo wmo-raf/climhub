@@ -1,12 +1,13 @@
 .cta {
     $root: &;
     @include sf-spacing(3);
+    margin-top: 75px;
     padding: 30px;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--color--text);
+    border: 1px solid var(--color--accent);
     border-radius: 10px;
     outline-offset: 4px;
     grid-column: 2 / span 2;
@@ -37,6 +38,7 @@
 
     &:hover {
         background-color: var(--color--highlight);
+        border: 1px transparent var(--color--text);
 
         #{$root}__title,
         #{$root}__description {
