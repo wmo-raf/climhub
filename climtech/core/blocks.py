@@ -527,20 +527,20 @@ class MultiChoiceBlock(FieldBlock):
         )
         super().__init__(**kwargs)
 
-class CategoryBlock(blocks.StructBlock):
+class MapCategoryBlock(blocks.StructBlock):
     COUNTRY_CHOICES=[
-            ('DZ', 'Algeria'), ('AO', 'Angola'), ('BJ', 'Benin'), ('BW', 'Botswana'),
-            ('BF', 'Burkina Faso'), ('BI', 'Burundi'), ('CM', 'Cameroon'), ('CV', 'Cape Verde'),
-            ('CF', 'Central African Republic'), ('TD', 'Chad'), ('KM', 'Comoros'), ('CG', 'Congo - Brazzaville'),
-            ('CD', 'Congo - Kinshasa'), ('CI', "Côte d'Ivoire"), ('DJ', 'Djibouti'), ('EG', 'Egypt'),
-            ('GQ', 'Equatorial Guinea'), ('ER', 'Eritrea'), ('SZ', 'Eswatini'), ('ET', 'Ethiopia'),
-            ('GA', 'Gabon'), ('GM', 'Gambia'), ('GH', 'Ghana'), ('GN', 'Guinea'), ('GW', 'Guinea-Bissau'),
-            ('KE', 'Kenya'), ('LS', 'Lesotho'), ('LR', 'Liberia'), ('LY', 'Libya'), ('MG', 'Madagascar'),
-            ('MW', 'Malawi'), ('ML', 'Mali'), ('MR', 'Mauritania'), ('MU', 'Mauritius'), ('MA', 'Morocco'),
-            ('MZ', 'Mozambique'), ('NA', 'Namibia'), ('NE', 'Niger'), ('NG', 'Nigeria'), ('RW', 'Rwanda'),
-            ('ST', 'São Tomé and Príncipe'), ('SN', 'Senegal'), ('SC', 'Seychelles'), ('SL', 'Sierra Leone'),
-            ('SO', 'Somalia'), ('ZA', 'South Africa'), ('SS', 'South Sudan'), ('SD', 'Sudan'), ('TZ', 'Tanzania'),
-            ('TG', 'Togo'), ('TN', 'Tunisia'), ('UG', 'Uganda'), ('ZM', 'Zambia'), ('ZW', 'Zimbabwe')
+            ('dz', 'Algeria'), ('ao', 'Angola'), ('bj', 'Benin'), ('bw', 'Botswana'),
+    ('bf', 'Burkina Faso'), ('bi', 'Burundi'), ('cm', 'Cameroon'), ('cv', 'Cape Verde'),
+    ('cf', 'Central African Republic'), ('td', 'Chad'), ('km', 'Comoros'), ('cg', 'Congo - Brazzaville'),
+    ('cd', 'Congo - Kinshasa'), ('ci', "Côte d'Ivoire"), ('dj', 'Djibouti'), ('eg', 'Egypt'),
+    ('gq', 'Equatorial Guinea'), ('er', 'Eritrea'), ('sz', 'Eswatini'), ('et', 'Ethiopia'),
+    ('ga', 'Gabon'), ('gm', 'Gambia'), ('gh', 'Ghana'), ('gn', 'Guinea'), ('gw', 'Guinea-Bissau'),
+    ('ke', 'Kenya'), ('ls', 'Lesotho'), ('lr', 'Liberia'), ('ly', 'Libya'), ('mg', 'Madagascar'),
+    ('mw', 'Malawi'), ('ml', 'Mali'), ('mr', 'Mauritania'), ('mu', 'Mauritius'), ('ma', 'Morocco'),
+    ('mz', 'Mozambique'), ('na', 'Namibia'), ('ne', 'Niger'), ('ng', 'Nigeria'), ('rw', 'Rwanda'),
+    ('st', 'São Tomé and Príncipe'), ('sn', 'Senegal'), ('sc', 'Seychelles'), ('sl', 'Sierra Leone'),
+    ('so', 'Somalia'), ('za', 'South Africa'), ('ss', 'South Sudan'), ('sd', 'Sudan'), ('tz', 'Tanzania'),
+    ('tg', 'Togo'), ('tn', 'Tunisia'), ('ug', 'Uganda'), ('zm', 'Zambia'), ('zw', 'Zimbabwe')
         ]
     category_name = blocks.CharBlock(required=True, max_length=255, label="Category Name")
     color = blocks.CharBlock(required=True, help_text="Hex code for category color")
@@ -549,6 +549,16 @@ class CategoryBlock(blocks.StructBlock):
         template = 'patterns/components/streamfields/map_block/category_block.html'
         icon = 'table-list'
 
+
+class MapBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=255, help_text="Title for the map")
+    subheading = blocks.CharBlock(max_length=255, blank=True, null=True, help_text="Subheading (optional)")
+    description = blocks.RichTextBlock(features=["bold", "italic", "link"], help_text="Description of the map")
+
+    map_categories = blocks.ListBlock(MapCategoryBlock(), min_num=1)
+
+    class Meta:
+        template = "patterns/components/streamfields/map_block/map_block.html"
 
 class HomePageStoryBlock(blocks.StreamBlock):
     get_started_block = SnippetChooserBlock("core.GetStartedSnippet", icon="th-list")

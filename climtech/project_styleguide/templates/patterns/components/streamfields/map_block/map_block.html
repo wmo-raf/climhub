@@ -1,11 +1,88 @@
-<div>
-    <h3>{{ value.heading }}</h3>
-    <p>{{ value.subheading }}</p>
-    {% for category in value.categories %}
-        <div>
-            <strong>Category:</strong> {{ category.name }} ({{ category.color }})
-            <input type="text" data-tagify value="{{ category.countries|join:',' }}" />
-        </div>
-    {% endfor %}
-    <div class="map-preview" id="map-{{ id }}"></div>
+{% load static wagtailcore_tags %}
+
+
+
+<div class="map-section grid">
+    <div class="map-section__map-container" id="map-container"></div>
+
+    <div class="map-section__map-info">
+        <h1 class="map-section__heading">{{ value.heading }}</h1>
+        {% if self.subheading %}<p class="hero__subheading intro-big">{{ value.subheading }}</p>{% endif %}
+        <div class="map-section__description">{{ value.description|richtext }}</div>
+    </div>
+
+
 </div>
+
+
+{% block extra_js %}
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/data.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/mapdata/custom/africa.topo.json"></script>
+<script>
+    function lightenColor(hex, percent) {
+        let num = parseInt(hex.replace("#", ""), 16),
+            amt = Math.round(2.55 * percent),
+            r = (num >> 16) + amt,
+            g = (num >> 8 & 0x00FF) + amt,
+            b = (num & 0x0000FF) + amt;
+
+        return "#" + (0x1000000 + (r < 255 ? (r < 1 ? 0 : r) : 255) * 0x10000 +
+            (g < 255 ? (g < 1 ? 0 : g) : 255) * 0x100 +
+            (b < 255 ? (b < 1 ? 0 : b) : 255)).toString(16).slice(1).toUpperCase();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://code.highcharts.com/mapdata/custom/africa.topo.json")
+            .then(response => response.json())
+            .then(topology => {
+                Highcharts.mapChart("map-container", {
+                    chart: {
+                        map: topology
+                    },
+                    title: { text: "" },
+                    legend: { enabled: true },
+                    series: [{
+                        mapData: topology,
+                        joinBy: "hc-key",
+                        name: "Countries",
+                        states: {
+                            hover: {
+                                colorKey: "hoverColor"
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false,
+                            format: "{point.name}",
+                            allowOverlap: false,
+                            style: { fontSize: '10px', fontWeight: 'bold', color: '#000' },
+                            filter: {
+                                property: 'name',
+                                operator: '!=',
+                                value: null
+                            }
+                        },
+
+                        data: [
+                            {% for category in self.map_categories %}
+                                {% for country in category.countries %}
+                                    {
+                                        "hc-key": "{{ country|lower }}",
+                                        "color": "{{ category.color }}",
+                                        "hoverColor": lightenColor("{{ category.color }}", 20),
+                                        "name": "{{ country }}"
+                                    },
+                                {% endfor %}
+                            {% endfor %}
+                        ]
+                    }]
+                });
+            });
+
+
+    });
+
+</script>
+{% endblock extra_js %}
