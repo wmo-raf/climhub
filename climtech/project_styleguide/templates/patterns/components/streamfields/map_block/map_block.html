@@ -1,22 +1,26 @@
 {% load static wagtailcore_tags %}
 
+
+
+<div class="map-section grid">
+    <div class="map-section__map-container" id="map-container"></div>
+
+    <div class="map-section__map-info">
+        <h1 class="map-section__heading">{{ value.heading }}</h1>
+        {% if self.subheading %}<p class="hero__subheading intro-big">{{ value.subheading }}</p>{% endif %}
+        <div class="map-section__description">{{ value.description|richtext }}</div>
+    </div>
+
+
+</div>
+
+
+{% block extra_js %}
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/data.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
 <script src="https://code.highcharts.com/mapdata/custom/africa.topo.json"></script>
-
-<div class="map-section">
-    <div class="map-info">
-        <h2>{{ value.heading }}</h2>
-        {% if self.subheading %}<h3>{{ value.subheading }}</h3>{% endif %}
-        <div class="map-description">{{ value.description|richtext }}</div>
-    </div>
-
-    <div id="map-container"></div>
-
-</div>
-
 <script>
     function lightenColor(hex, percent) {
         let num = parseInt(hex.replace("#", ""), 16),
@@ -81,4 +85,4 @@
     });
 
 </script>
-
+{% endblock extra_js %}

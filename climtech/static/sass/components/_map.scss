@@ -1,0 +1,67 @@
+.block-map_block{
+    background-color: #fff;
+
+    .theme-dark & {
+        background-color: var(--color--background);
+    }
+}
+
+.map-section {
+    padding: 50px 30px;
+
+    @include media-query(smallonly){
+        grid-template-columns: 1fr; /* Single-column layout */
+        grid-template-rows: auto auto; /* Stack items vertically */
+        height: auto;
+    }
+
+    @include media-query(medium) {
+        padding: 100px 0;
+    }
+
+    @include media-query(large) {
+        padding: 100px 0;
+    }
+
+    &__map-info {
+
+        @include media-query(smallonly){
+            grid-row: 1;
+            grid-column: 1 / span 1;
+
+        }
+
+        @include media-query(medium) {
+            grid-column: 4 / span 3;
+            padding: 0 60px;
+        }
+
+    }
+
+    &__map-container {
+
+        height: 300px; /* Adjust height for better display */
+
+
+        @include media-query(smallonly){
+            grid-column: 1 / span 1;
+
+        }
+
+        @include media-query(medium) {
+            grid-column: 2 / span 2;
+            height: 550px;
+        }
+
+    }
+
+    &__heading {
+
+    }
+
+    &__description {
+
+    }
+
+
+}
