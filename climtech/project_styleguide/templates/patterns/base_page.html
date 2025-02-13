@@ -50,10 +50,10 @@
         <meta property="og:image" content="{{ site.root_url }}{% static 'img/default-sharing-image.png' %}" />
     {% endif %}
     <meta property="og:description" content="{% if page.social_text %}{{ page.social_text }}{% elif page.listing_intro %}{{ page.listing_intro }}{% elif page.introduction %}{{ page.introduction|truncatechars:200 }}{% endif %}" />
-    <meta property="og:site_name" content="ClimTech" />
+    <meta property="og:site_name" content="ClimHub" />
 
-    <link title="The ClimTech Blog" type="application/atom+xml" rel="alternate" href="{% url 'blog_feed' %}">
-    <link title="This Week in ClimTech" type="application/atom+xml" rel="alternate" href="{% url 'newsletter_feed' %}">
+    <link title="The ClimHub Blog" type="application/atom+xml" rel="alternate" href="{% url 'blog_feed' %}">
+    <link title="This Week in ClimHub" type="application/atom+xml" rel="alternate" href="{% url 'newsletter_feed' %}">
 
     {# Reference: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs #}
     <link rel="icon" href="{% static 'img/favicons/favicon.ico' %}" sizes="32x32">{# 32x32 #}

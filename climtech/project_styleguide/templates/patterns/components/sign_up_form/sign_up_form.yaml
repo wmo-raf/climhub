@@ -1,5 +1,5 @@
 context:
   MAILCHIMP_ACCOUNT_ID: 'Fake'
   MAILCHIMP_NEWSLETTER_ID: 'Fake'
-  heading: 'This Week in ClimTech'
+  heading: 'This Week in ClimHub'
   sub_heading: 'Sign up for latest news and updates on ClimTech'
