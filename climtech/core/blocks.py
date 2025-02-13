@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 
+import json
 from wagtail import blocks
 from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
@@ -493,6 +494,10 @@ class ContentStoryBlock(blocks.StreamBlock):
         icon="envelope-open-text",
         template="patterns/components/streamfields/sign_up_form_block/sign_up_form_block.html",
     )
+    map_block = SnippetChooserBlock(
+        target_model="core.MapSnippet",
+        help_text="Select a Map Block"
+    )
     comparison_table = ComparisonTableBlock()
     logos = LogoBlock(group="Logos")
     video = VideoBlock()
@@ -500,25 +505,6 @@ class ContentStoryBlock(blocks.StreamBlock):
     class Meta:
         template = "patterns/components/streamfields/content_story_block.html"
 
-
-# class CountryBlock(blocks.StructBlock):
-#     country = blocks.ChoiceBlock(
-#         choices=[
-#             ('DZ', 'Algeria'), ('AO', 'Angola'), ('BJ', 'Benin'), ('BW', 'Botswana'),
-#             ('BF', 'Burkina Faso'), ('BI', 'Burundi'), ('CM', 'Cameroon'), ('CV', 'Cape Verde'),
-#             ('CF', 'Central African Republic'), ('TD', 'Chad'), ('KM', 'Comoros'), ('CG', 'Congo - Brazzaville'),
-#             ('CD', 'Congo - Kinshasa'), ('CI', "Côte d'Ivoire"), ('DJ', 'Djibouti'), ('EG', 'Egypt'),
-#             ('GQ', 'Equatorial Guinea'), ('ER', 'Eritrea'), ('SZ', 'Eswatini'), ('ET', 'Ethiopia'),
-#             ('GA', 'Gabon'), ('GM', 'Gambia'), ('GH', 'Ghana'), ('GN', 'Guinea'), ('GW', 'Guinea-Bissau'),
-#             ('KE', 'Kenya'), ('LS', 'Lesotho'), ('LR', 'Liberia'), ('LY', 'Libya'), ('MG', 'Madagascar'),
-#             ('MW', 'Malawi'), ('ML', 'Mali'), ('MR', 'Mauritania'), ('MU', 'Mauritius'), ('MA', 'Morocco'),
-#             ('MZ', 'Mozambique'), ('NA', 'Namibia'), ('NE', 'Niger'), ('NG', 'Nigeria'), ('RW', 'Rwanda'),
-#             ('ST', 'São Tomé and Príncipe'), ('SN', 'Senegal'), ('SC', 'Seychelles'), ('SL', 'Sierra Leone'),
-#             ('SO', 'Somalia'), ('ZA', 'South Africa'), ('SS', 'South Sudan'), ('SD', 'Sudan'), ('TZ', 'Tanzania'),
-#             ('TG', 'Togo'), ('TN', 'Tunisia'), ('UG', 'Uganda'), ('ZM', 'Zambia'), ('ZW', 'Zimbabwe')
-#         ],
-#         label="Country"
-#     )
 class MultiChoiceBlock(FieldBlock):
     def __init__(self, choices=None, **kwargs):
         self.field = forms.MultipleChoiceField(
@@ -527,8 +513,7 @@ class MultiChoiceBlock(FieldBlock):
         )
         super().__init__(**kwargs)
 
-class MapCategoryBlock(blocks.StructBlock):
-    COUNTRY_CHOICES=[
+COUNTRY_CHOICES=[
             ('dz', 'Algeria'), ('ao', 'Angola'), ('bj', 'Benin'), ('bw', 'Botswana'),
     ('bf', 'Burkina Faso'), ('bi', 'Burundi'), ('cm', 'Cameroon'), ('cv', 'Cape Verde'),
     ('cf', 'Central African Republic'), ('td', 'Chad'), ('km', 'Comoros'), ('cg', 'Congo - Brazzaville'),
@@ -542,6 +527,8 @@ class MapCategoryBlock(blocks.StructBlock):
     ('so', 'Somalia'), ('za', 'South Africa'), ('ss', 'South Sudan'), ('sd', 'Sudan'), ('tz', 'Tanzania'),
     ('tg', 'Togo'), ('tn', 'Tunisia'), ('ug', 'Uganda'), ('zm', 'Zambia'), ('zw', 'Zimbabwe')
         ]
+class MapCategoryBlock(blocks.StructBlock):
+
     category_name = blocks.CharBlock(required=True, max_length=255, label="Category Name")
     color = blocks.CharBlock(required=True, help_text="Hex code for category color")
     countries = MultiChoiceBlock(choices=COUNTRY_CHOICES)
@@ -556,6 +543,25 @@ class MapBlock(blocks.StructBlock):
     description = blocks.RichTextBlock(features=["bold", "italic", "link"], help_text="Description of the map")
 
     map_categories = blocks.ListBlock(MapCategoryBlock(), min_num=1)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
+        # Convert map_categories to a JSON-serializable list
+
+        selected_countries = []
+        for category in value["map_categories"]:
+            for country_code in category["countries"]:
+                for code, country_name in COUNTRY_CHOICES:
+                    if country_code == code:
+                        selected_countries.append({
+                            "name":country_name,
+                            "code":country_code
+                        })
+
+
+        context["map_categories_json"] = json.dumps(selected_countries)
+
+        return context
 
     class Meta:
         template = "patterns/components/streamfields/map_block/map_block.html"

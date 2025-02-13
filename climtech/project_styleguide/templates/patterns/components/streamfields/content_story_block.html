@@ -1,5 +1,11 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% for block in value %}
+{% if block.block_type == 'map_block' %}
+        {{ block.value.body }}
+
+    {% else %}
     {% include_block block %}
+
+    {% endif %}
 {% endfor %}

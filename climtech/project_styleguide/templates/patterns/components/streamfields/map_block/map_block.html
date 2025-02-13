@@ -20,7 +20,8 @@
 <script src="https://code.highcharts.com/maps/modules/data.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
-<script src="https://code.highcharts.com/mapdata/custom/africa.topo.json"></script>
+
+
 <script>
     function lightenColor(hex, percent) {
         let num = parseInt(hex.replace("#", ""), 16),
@@ -35,51 +36,82 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
+
         fetch("https://code.highcharts.com/mapdata/custom/africa.topo.json")
             .then(response => response.json())
             .then(topology => {
-                Highcharts.mapChart("map-container", {
-                    chart: {
-                        map: topology
-                    },
-                    title: { text: "" },
-                    legend: { enabled: true },
-                    series: [{
-                        mapData: topology,
-                        joinBy: "hc-key",
-                        name: "Countries",
-                        states: {
-                            hover: {
-                                colorKey: "hoverColor"
-                            }
-                        },
+                const seriesData = [];
+                let categoryData = [];
+
+
+            {% for category in self.map_categories %}
+            categoryData = []
+                {% for country_code in category.countries %}
+
+                categoryData.push({
+                    "hc-key": "{{ country_code }}",
+                });
+
+                {% endfor %}
+
+                seriesData.push({
+                    name:'{{category.category_name}}',
+                    data:categoryData.map(country => {
+                        return {code:country["hc-key"]}
+                    } ),
+                    color: "{{ category.color }}"
+                })
+
+
+            {% endfor %}
+
+            Highcharts.mapChart("map-container", {
+                credits: {
+                    enabled:false
+                },
+                exporting:{
+                    enabled:false
+                },
+                chart: {
+                    map: topology,
+                    backgroundColor: 'transparent',
+                    spacing: [0,0,0,0],
+                },
+                title: { text: "" },
+                legend: { enabled: true },
+
+
+                series: seriesData,
+                plotOptions: {
+                    map: {
+                        joinBy: ['hc-key', 'code'],
                         dataLabels: {
-                            enabled: false,
-                            format: "{point.name}",
-                            allowOverlap: false,
-                            style: { fontSize: '10px', fontWeight: 'bold', color: '#000' },
+                            enabled: true,
+                            color: '#000000',
+                            format: '{point.name}',
                             filter: {
-                                property: 'name',
+                                property: 'code',
                                 operator: '!=',
                                 value: null
-                            }
+                            },
+                            style:{
+                                fontWeight:'600'
+                            },
+                            allowOverlap: true,
                         },
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: '{point.name}: <b>{series.name}</b>'
+                        },
+                        allAreas: true,
+                        nullColor:"transparent"
+                    },
 
-                        data: [
-                            {% for category in self.map_categories %}
-                                {% for country in category.countries %}
-                                    {
-                                        "hc-key": "{{ country|lower }}",
-                                        "color": "{{ category.color }}",
-                                        "hoverColor": lightenColor("{{ category.color }}", 20),
-                                        "name": "{{ country }}"
-                                    },
-                                {% endfor %}
-                            {% endfor %}
-                        ]
-                    }]
-                });
+
+                },
+
             });
+        });
 
 
     });
