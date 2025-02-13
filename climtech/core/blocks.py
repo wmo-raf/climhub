@@ -513,21 +513,23 @@ class MultiChoiceBlock(FieldBlock):
         )
         super().__init__(**kwargs)
 
-COUNTRY_CHOICES=[
-            ('dz', 'Algeria'), ('ao', 'Angola'), ('bj', 'Benin'), ('bw', 'Botswana'),
-    ('bf', 'Burkina Faso'), ('bi', 'Burundi'), ('cm', 'Cameroon'), ('cv', 'Cape Verde'),
-    ('cf', 'Central African Republic'), ('td', 'Chad'), ('km', 'Comoros'), ('cg', 'Congo - Brazzaville'),
-    ('cd', 'Congo - Kinshasa'), ('ci', "Côte d'Ivoire"), ('dj', 'Djibouti'), ('eg', 'Egypt'),
-    ('gq', 'Equatorial Guinea'), ('er', 'Eritrea'), ('sz', 'Eswatini'), ('et', 'Ethiopia'),
-    ('ga', 'Gabon'), ('gm', 'Gambia'), ('gh', 'Ghana'), ('gn', 'Guinea'), ('gw', 'Guinea-Bissau'),
-    ('ke', 'Kenya'), ('ls', 'Lesotho'), ('lr', 'Liberia'), ('ly', 'Libya'), ('mg', 'Madagascar'),
-    ('mw', 'Malawi'), ('ml', 'Mali'), ('mr', 'Mauritania'), ('mu', 'Mauritius'), ('ma', 'Morocco'),
-    ('mz', 'Mozambique'), ('na', 'Namibia'), ('ne', 'Niger'), ('ng', 'Nigeria'), ('rw', 'Rwanda'),
-    ('st', 'São Tomé and Príncipe'), ('sn', 'Senegal'), ('sc', 'Seychelles'), ('sl', 'Sierra Leone'),
-    ('so', 'Somalia'), ('za', 'South Africa'), ('ss', 'South Sudan'), ('sd', 'Sudan'), ('tz', 'Tanzania'),
-    ('tg', 'Togo'), ('tn', 'Tunisia'), ('ug', 'Uganda'), ('zm', 'Zambia'), ('zw', 'Zimbabwe')
-        ]
 class MapCategoryBlock(blocks.StructBlock):
+
+
+    COUNTRY_CHOICES=[
+            ('dz', 'Algeria'), ('ao', 'Angola'), ('bj', 'Benin'), ('bw', 'Botswana'),
+            ('bf', 'Burkina Faso'), ('bi', 'Burundi'), ('cm', 'Cameroon'), ('cv', 'Cape Verde'),
+            ('cf', 'Central African Republic'), ('td', 'Chad'), ('km', 'Comoros'), ('cg', 'Congo - Brazzaville'),
+            ('cd', 'Congo - Kinshasa'), ('ci', "Côte d'Ivoire"), ('dj', 'Djibouti'), ('eg', 'Egypt'),
+            ('gq', 'Equatorial Guinea'), ('er', 'Eritrea'), ('sz', 'Eswatini'), ('et', 'Ethiopia'),
+            ('ga', 'Gabon'), ('gm', 'Gambia'), ('gh', 'Ghana'), ('gn', 'Guinea'), ('gw', 'Guinea-Bissau'),
+            ('ke', 'Kenya'), ('ls', 'Lesotho'), ('lr', 'Liberia'), ('ly', 'Libya'), ('mg', 'Madagascar'),
+            ('mw', 'Malawi'), ('ml', 'Mali'), ('mr', 'Mauritania'), ('mu', 'Mauritius'), ('ma', 'Morocco'),
+            ('mz', 'Mozambique'), ('na', 'Namibia'), ('ne', 'Niger'), ('ng', 'Nigeria'), ('rw', 'Rwanda'),
+            ('st', 'São Tomé and Príncipe'), ('sn', 'Senegal'), ('sc', 'Seychelles'), ('sl', 'Sierra Leone'),
+            ('so', 'Somalia'), ('za', 'South Africa'), ('ss', 'South Sudan'), ('sd', 'Sudan'), ('tz', 'Tanzania'),
+            ('tg', 'Togo'), ('tn', 'Tunisia'), ('ug', 'Uganda'), ('zm', 'Zambia'), ('zw', 'Zimbabwe')
+    ]
 
     category_name = blocks.CharBlock(required=True, max_length=255, label="Category Name")
     color = blocks.CharBlock(required=True, help_text="Hex code for category color")
@@ -543,25 +545,6 @@ class MapBlock(blocks.StructBlock):
     description = blocks.RichTextBlock(features=["bold", "italic", "link"], help_text="Description of the map")
 
     map_categories = blocks.ListBlock(MapCategoryBlock(), min_num=1)
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context)
-        # Convert map_categories to a JSON-serializable list
-
-        selected_countries = []
-        for category in value["map_categories"]:
-            for country_code in category["countries"]:
-                for code, country_name in COUNTRY_CHOICES:
-                    if country_code == code:
-                        selected_countries.append({
-                            "name":country_name,
-                            "code":country_code
-                        })
-
-
-        context["map_categories_json"] = json.dumps(selected_countries)
-
-        return context
 
     class Meta:
         template = "patterns/components/streamfields/map_block/map_block.html"
