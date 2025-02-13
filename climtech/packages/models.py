@@ -25,8 +25,8 @@ readonly = forms.TextInput(attrs={"readonly": True})
 default_about_text = " ".join(
     """
     <p>
-        Projects listed on ClimTech are <i>third-party</i> packages.<br/>
-        They are not vetted nor endorsed by ClimTech.<br/>
+        Projects listed on ClimHub are <i>third-party</i> packages.<br/>
+        They are not vetted nor endorsed by ClimHub.<br/>
         Use them at your own risk.</p>
         <p>This page collects girds and packages from djangopackages.org.<br/>
     </p>
@@ -146,5 +146,5 @@ class Grid(models.Model):
 
     def display_title(self):
         return (
-            self.title[8:].title() if self.title.startswith("ClimTech ") else self.title
+            self.title[8:].title() if self.title.startswith("ClimHub ") else self.title
         )

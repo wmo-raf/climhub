@@ -7,7 +7,7 @@ from climtech.newsletter.models import NewsletterIndexPage, NewsletterPage
 
 
 class NewsLetterIssuesFeed(Feed):
-    title = "This week in ClimTech"
+    title = "This week in ClimHub"
     description = "Our weekly, or thereabouts, newsletter of the goings-on in the ClimTech community."
 
     def link(self):
