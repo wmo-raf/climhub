@@ -1,7 +1,7 @@
 {% extends "patterns/base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags %}
 
-{% block title_suffix %} | ClimTech{% endblock %}
+{% block title_suffix %} | ClimHub{% endblock %}
 
 {% block meta_tags %}
     <meta name="description" content="{% if page.social_text %}{{ page.social_text }}{% elif page.listing_intro %}{{ page.listing_intro }}{% elif page.introduction %}{{ page.introduction|truncatechars:200 }}{% endif %}" />
