@@ -9,6 +9,8 @@ from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from django import forms
+from wagtail_color_panel.blocks import NativeColorBlock
+
 
 from wagtailmedia.blocks import VideoChooserBlock
 
@@ -532,7 +534,8 @@ class MapCategoryBlock(blocks.StructBlock):
     ]
 
     category_name = blocks.CharBlock(required=True, max_length=255, label="Category Name")
-    color = blocks.CharBlock(required=True, help_text="Hex code for category color")
+    # color = blocks.CharBlock(required=True, help_text="Hex code for category color")
+    color =  NativeColorBlock(default="#dadada", help_text="Select Category color")
     countries = MultiChoiceBlock(choices=COUNTRY_CHOICES)
     class Meta:
         template = 'patterns/components/streamfields/map_block/category_block.html'
